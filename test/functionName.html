@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //function Names :
+
+
+
+        //1. charAt (return Type);
+        //Let me know if you want to get the last letter or any specific position!
+        // example 1;
+        let names = "Bhavani"
+        console.log(names.charAt(4))
+        console.log(names[0])
+        //example 2;
+        let age = "21"
+        console.log(age.charAt(1))
+        //example 3;
+        let name = "bow bow"
+        console.log(name)
+
+        //2.chatAt Code;
+        //example 1;
+        let alphabets = "B"
+        console.log(alphabets.charCodeAt(0))
+        console.log(alphabets)
+
+
+        //3.concat();
+        //Example 1
+        //The concat() method is used to join two or more strings together.
+        //         let firstName = "Bhavani"
+        //         let lastName = "Viswanathan"
+        // let message=firstName.concat(lastName)
+        // console.log(message)
+
+        //Example 2
+        let originalName = "santhosh"
+        let nickName = "santa"
+        let friendName = originalName.concat(nickName)
+        console.log(friendName)
+
+        //excersise in forloop
+
+        //  let message = "veerAmani is the Best"
+        //  message=message.toLowerCase()
+        //  let count = 0;
+        // //  let vowelsFound = "";
+        //  for (i = 0; i < message.length; i++) {
+        //      let char = message[i]
+        //    if (char === "a" || char === "e" || char === "i" || char === "o" || char === "u") {
+        // //         vowelsFound += char + " ";
+        //          count++;
+
+        //      }
+
+        //  }
+
+
+        let message = "veerAmani is the Best"
+        message = message.toLowerCase()
+        let count = 0;
+        let vowels = ["a", "e", "i", "o", "u"]
+        //  let vowelsFound = "";
+        for (i = 0; i < message.length; i++) {
+            let char = message[i]
+            // if (vowels.indexOf(char) != -1) {
+            if (vowels.includes(char)) {
+                count++;
+
+            }
+
+
+        }
+
+        // console.log("Vowels in the string:", vowelsFound.trim());
+        console.log("total numbers of Vowels:", count);
+
+        // let vowels=message.indexOf()
+        // if(vowels==="a","e","i","o","u")
+        // {
+        //     console.log(vowels);
+        //     count++;
+        // }
+
+        // let message = "veeramani is the Best";
+        // let count = 0;
+        // let vowelsFound = "";
+        // let vowels = "aeiou";
+
+        // for (let i = 0; i < message.length; i++) {
+        //     let char = message[i].toLowerCase();
+
+        //     // Use indexOf to check if the character is in the vowels string
+        //     if (vowels.indexOf(char) !== -1) {
+        //         vowelsFound += char + " ";
+        //         count++;
+        //     }
+        // }
+
+        // console.log("Vowels in the string:", vowelsFound.trim());
+        // console.log("Total number of vowels:", count);
+
+
+        // let str="   Hello      World!  "
+        // let trimstr=str.trim();
+        // console.log(trimstr);
+
+        // 4 startWith()
+        // let phoneNumber = "+91-1234567890";
+        // let number = phoneNumber.startsWith("+91")
+        // console.log(number)
+        // if (number) {
+        //     console.log("Indian phone number");
+
+        // } else {
+        //     console.log("Not an Indian phone number");
+        // }
+
+        let tamilNadu = "OneOf the beautiful place in india"
+        console.log(tamilNadu.startsWith("One"));
+        console.log(tamilNadu.startsWith("of"));
+        console.log(tamilNadu.startsWith("of", 3));
+
+        // 5 includes:
+        let programming = "javaScript"
+        console.log(programming.includes("javaScript"));
+        console.log(programming.includes("python"));
+        console.log(programming.includes("javaScript", 1))
+
+        //6.lastindexof()
+        const invite="hello Guys"
+        invite.lastIndexOf("invite");
+        // console.log("s")
+
+        // //7.IndexOf():
+        //  let cave="manjumell Boys"
+        //  let guna=cave.indexOf("Boys");
+        //  console.log(guna)
+
+         //8.IndexOf():
+         let cutie="Bhava Bow"
+         let pie=cutie.lastIndexOf("hava")
+         console.log(pie)
+
+         //9.String replace()
+
+
+        // 1.statsWith()
+          
+         let phoneNumber=["+91-878982478","+81-9345380251","71-9345380251","61-9345380251"]
+        
+         for(i=0;i<phoneNumber.length;i++){
+            let number=phoneNumber[i]
+            console.log(number)
+            
+
+             if(number.startsWith("+91")){
+                console.log("this the indian number")
+            }
+            else(number.startsWith("+81","+71","61"))
+            {
+                console.log("not its a indian number")
+            }
+         }
+
+
+
+        // 2.using if else
+
+        // let phoneNumber="+91-9345380251";
+        // let numeric= phoneNumber.starstWith ("+91")
+        // console.log(numeric)
+
+         
+        // let phoneNumber =("+91-1234567890","+81-1234567890") 
+        // let number = phoneNumber.startsWith("+91")
+        // console.log(number)
+        // if (number) {
+        //     console.log("Indian phone number");
+        // let numeric=phoneNumber.startsWith("+81")
+        // } else(number1) 
+        // {
+        //    console.log("Not an Indian phone number");
+        // }
+         
+         
+         //6.lastindexof()
+        const invited="hello Guys"
+        invited.lastIndexOf("hello");
+        //  console.log()
+
+        //7.IndexOf():
+         let caves="manjumell Boys"
+         let guna=caves.indexOf("manjumel")
+        //  caves.indexOf("Boys")
+          console.log()
+
+        //  const str = "Hello World";
+        //  str.indexOf("World")
+         
+
+        
+
+    </script>
+</body>
+
+</html>

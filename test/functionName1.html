@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="container mt-5">
+  <div class="row" id="output"></div>
+</div>
+   <script>
+        let phoneNumber=["+91-878982478","+81-9345380251","71-9345380251","61-9345380251"]
+        
+         for(i=0;i<phoneNumber.length;i++){
+            let number=phoneNumber[i]
+            // console.log(number)
+            
+            let isStarts=number.startsWith("+91")
+            console.log(isStarts)
+             if(isStarts){
+         console.log(`${ number} -this is  the indian number`)
+            }
+           else{
+            console.log(`${number}-"not a indian number"`)
+           }
+        }
+
+
+
+        //  let phoneNumber=["+91-878982478","+81-9345380251","71-9345380251","61-9345380251"]
+        
+        //  for(i=0;i<phoneNumber.length;i++){
+        //     let number=phoneNumber[i].startsWith("+91")
+        //     console.log(number)
+            
+
+        //      if(number){
+        //         console.log("this the indian number")
+        //     }
+        //     else
+        //     {
+        //         console.log("not its a indian number")
+        //     }
+        //  }
+         
+
+//     let phoneNumber = ["+91-878982478", "+81-9345380251", "71-9345380251", "61-9345380251"];
+
+//   const outputDiv = document.getElementById('output');
+
+//   for (let i = 0; i < phoneNumber.length; i++) {
+//     let number = phoneNumber[i];
+//     let message = "";
+
+//     if (number.startsWith("+91")) {
+//       message = `${number} - this is an Indian number`;
+//     } else {
+//       message = `${number} - not an Indian number`;
+//     }
+       
+//    // Create a column and add it to the output
+//     const col = document.createElement('div');
+//     col.className = 'col-12 mb-2';
+//     col.innerHTML = `<div class="p-3 border bg-light">${message}</div>`;
+
+//     outputDiv.appendChild(col);
+// }
+    
+    </script> 
+</body>
+</html>

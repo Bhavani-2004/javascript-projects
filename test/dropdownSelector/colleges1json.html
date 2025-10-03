@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+    }
+
+    option[disabled] {
+      color: #888;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h2>Search Engineering Colleges</h2>
+    <input type="text" id="searchBox" placeholder="Start typing college name...">
+    <select id="collegeDropdown">
+      <option>Select a college</option>
+    </select>
+  </div>
+
+  <script>
+    const dropdown = document.getElementById("collegeDropdown");
+    const searchBox = document.getElementById("searchBox");
+    let colleges = []
+    fetch("csv.json")
+      .then(response => response.json())
+      .then(data => {
+        colleges = data;
+        updateDropdown('');
+      })
+      .catch(error => console.error("Error loading JSON:", error));
+
+
+
+
+
+    function updateDropdown(filterText) {
+      dropdown.innerHTML = '<option value="">-- Select a College --</option>';
+      console.log(colleges)
+      const filtered = colleges.filter(c =>
+        c.college_name.toLowerCase().includes(filterText.toLowerCase())
+      );
+
+      filtered.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.college_name;
+        opt.textContent = `${c.college_name} (${c.district_name})`;
+        dropdown.appendChild(opt);
+      });
+    }
+  </script>
+
+
+</body>
+
+</html>

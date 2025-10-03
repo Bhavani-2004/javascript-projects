@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #f2f4f8;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    h1 {
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .login-box {
+        background: #fff;
+        padding: 30px;
+        width: 300px;
+        border-radius: 12px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        font-size: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+    }
+
+    input:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .message {
+        margin-top: 15px;
+        font-weight: bold;
+        min-height: 20px;
+    }
+
+    .error {
+        color: red;
+    }
+
+    .warning {
+        color: orange;
+    }
+
+    .success {
+        color: green;
+    }
+</style>
+
+<body>
+    <h1>secured login page</h1>
+    <div class="login-box">
+        <input type="text" id="username" placeholder="username">
+        <input type="password" id="password" placeholder="password">
+        <button onclick="login()">login</button>
+        <div id="message" class="messagge"> </div>
+    </div>
+
+</body>
+<script>
+   
+    const defaultsUsername="admin"
+    const defaultsPassword="Bow@12345"
+    
+    let attempts = 3
+    function login() {
+       const username = document.getElementById("username").value
+       const password = document.getElementById("password").value
+       const message = document.getElementById("message")
+       
+       
+       if (attempts === 0) {
+            message.innerText = " >_< Account locked"
+            message.className = "message Error"
+            return;
+        }
+        if (username !=  defaultsUsername) {
+            message.innerText = " invalid username."
+            message.class = "message Error"
+            attempts--;
+            return;
+        }
+
+         if (password.length < 6) {
+            message.innerText = "Short password"
+            message.className = "message warning"
+            atempts--;
+            return;
+        }
+
+         
+        if (password != defaultsPassword) {
+            message.innerText = "invalid your password"
+            message.className = "message warning"
+            attempts--;
+            return;
+        }
+
+        if (username ===  defaultsUsername && password === defaultsPassword) {
+            message.innerText = "✅ Login successful."
+            message.class = "success"
+            attempts--;
+        }
+        
+
+
+
+
+    }
+</script>
+
+</html>

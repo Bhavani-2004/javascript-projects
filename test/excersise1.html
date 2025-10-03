@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Cutoff-Based College Finder</title>
+</head>
+
+<body>
+  <h2> 12th Marks to College Eligibility</h2>
+
+  <label>Maths: </label><input type="number" id="maths"><br>
+  <label>Physics: </label><input type="number" id="physics"><br>
+  <label>Chemistry: </label><input type="number" id="chemistry"><br><br>
+
+  <button onclick="calculateCutoff()">Submit</button>
+
+  <h3 id="cutoffResult"></h3>
+
+  <div id="collegeSection" style="display:none;">
+    <h4>Select College:</h4>
+    <select id="collegeSelect">
+      <option value="">-- Select College --</option>
+    </select>
+    <button onclick="checkEligibility()">Search</button>
+
+    <div id="collegeResult" style="margin-top: 10px;"></div>
+  </div>
+
+  <script>
+    const colleges = [
+      { name: "SNS College", address: "Coimbatore", cutoff: 85 },
+      { name: "Vel Tech", address: "Chennai", cutoff: 90 },
+      { name: "Karpagam College", address: "Coimbatore", cutoff: 88 },
+      { name: "Anna University", address: "Chennai", cutoff: 195 },
+    ];
+
+    let studentCutoff = 0;
+
+    function calculateCutoff() {
+      const maths = parseFloat(document.getElementById("maths").value);
+      const physics = parseFloat(document.getElementById("physics").value);
+      const chemistry = parseFloat(document.getElementById("chemistry").value);
+
+      if (isNaN(maths) || isNaN(physics) || isNaN(chemistry)) {
+        alert("Please enter all marks properly.");
+        return;
+      }
+
+      studentCutoff = (maths / 2) + (physics / 4) + (chemistry / 4);
+      document.getElementById("cutoffResult").innerText = `Your Engineering Cutoff is: ${studentCutoff.toFixed(2)}`;
+
+
+      const eligible = colleges.filter(c => studentCutoff >= c.cutoff);
+      const select = document.getElementById("collegeSelect");
+      select.innerHTML = `<option value="">-- Select College --</option>`;
+
+      eligible.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.name;
+        opt.text = c.name;
+        select.appendChild(opt);
+      });
+
+      document.getElementById("collegeSection").style.display = "block";
+    }
+
+    function checkEligibility() {
+      const selectedCollege = document.getElementById("collegeSelect").value;
+      const detailsDiv = document.getElementById("collegeResult");
+
+      if (!selectedCollege) {
+        detailsDiv.innerHTML = " Please select a college.";
+        return;
+      }
+
+      const clg = colleges.find(c => c.name === selectedCollege);
+
+      if (studentCutoff >= clg.cutoff) {
+        detailsDiv.innerHTML = `
+          <strong>You are eligible for:  <br>  ${clg.name}</strong><br>
+          <strong>Address:</strong> ${clg.address}<br>
+          <strong>Required Cutoff:</strong> ${clg.cutoff}
+        `;
+      } else {
+        detailsDiv.innerHTML = `
+          <strong> You are not eligible for ${clg.name}</strong><br>
+          This college requires a cutoff of ${clg.cutoff}, but your cutoff is only ${studentCutoff.toFixed(2)}.
+        `;
+      }
+    }
+  </script>
+</body>
+
+</html>

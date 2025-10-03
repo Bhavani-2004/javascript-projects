@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //Array in JavaScript
+        //array
+        let arr = [true, 2, "bow boww"]
+        let arra = arr
+        console.log(arra)
+
+        //destructive method(Alter the orginal and returns a modified Array)
+        //1. pop()
+
+        let names = ["kishgeetha", "pandu", "dammlu"]
+        names.pop()
+        console.log(names)
+        //    let name=names.pop()
+        //    console.log(name)
+
+        //2.push()
+        let fruits = ["mangoo", "apple"]
+        fruits.push("orange", "gova")
+        console.log(fruits)
+
+        //3.shift()simillarly to pop()
+
+        let namesA = ["kishgeetha", "pandu", "dammlu"]
+        namesA.shift()
+        console.log(namesA)
+
+        //4.unshift()simillarly to push()
+
+        let fruitsA = ["mangoo", "apple"]
+        fruitsA.unshift("orange", "gova")
+        console.log(fruitsA)
+
+        //5.splice()
+        // 1)
+        let flowers = ["jasmine", "rose", "dairy", "tulip", "sun flower", 'tulip', 'deasi', 'jas']
+        flowers.splice(2, 4)
+        console.log(flowers)//"dairy", "tulip", "sun flower", 'tulip',
+        //2)
+        let icecreams = ["vanilla", "chocolate", "chocolate", "straberryies", "butterscotch"]
+        icecreams.splice(0, 2)
+        console.log(icecreams)//"vanilla", "chocolate",
+        //3)
+        let departments = ["CSE", "EEE", "ECE", "civil", "MECH"]
+        let department = departments.splice(2, 1)
+        console.log(department)//"ECE"
+        //4)
+        let clothes = ["frog", "chutii", "pants", "t-shirt", "shirt", "lehangaa", "shorts"]
+        let cloth = clothes.splice(3, 3)
+        console.log(cloth)//"t-shirt", "shirt", "lehangaa", 
+
+
+        //Non-Distructive methods(returns a new or non-modified array even after using an array method.)
+
+        //1.concat()
+        let foodItems = ["Biriyani", "hyderabad Biryani", "layer Biriyani", "chettiNadu biriyani"]
+        let foodNames = ["Salad", "Bread", "Fish", "Rice"]
+        let foods = foodItems.concat(foodNames)
+        console.log(foods)
+
+        //2.slice()
+        //1)
+        let countries = ['Germany', 'Poland', 'Sweden', 'Ghana', 'Nigeria', 'South Africa', 'nigeria', 'ghana']
+        let europeCountries = countries.slice(0, 4)
+        console.log(europeCountries)//'Germany', 'Poland', 'Sweden','Ghana'
+        let africanCountries = countries.slice(4)
+        console.log(africanCountries)//'Nigeria', 'South Africa', 'nigeria', 'ghana'
+
+        //2)
+        let staffs = ["lavanya", "kavya", "priya", " kumar", "mahesh", "suresh", "balaji"]
+        let staff = staffs.slice(1, 3)
+        console.log(staff) //"kavya", "priya",
+
+        let a = ["bow", "cow", "dow", "miow"]
+        let a1 = a.slice(1, 3)
+        console.log(a1)//"cow","dow"
+
+        //3.Fill() 
+        //Example 1: Fill the entire array
+        const nums = [1, 2, 3, 5, 6];
+        nums.fill(0); // fills the entire array with 0
+        console.log(nums);
+
+        //Example 2: Fill from a specific index
+        const strings = ["code", "damn", "web2", "web3"];
+        strings.fill("5", 1); // fills the elements with abc at index 2 and 3
+        console.log(strings);
+        //Example 3: Fill within a range
+        const websites = ["geeks", "w3", "DEV", "mosilla", "dev", "gee"]
+        websites.fill("@", 2, 4)
+        console.log(websites)
+        //example 4: 
+        let writters = ["jayaganth", "vijaykanth", "vaira muthu", "kalignar", " bhavani"]
+        writters.fill("9", 1, 3)
+        console.log(writters)
+        //example 5:
+        let writters1 = ["jayaganth", "....", "!!!!!", "####", "vijaykanth", "vaira muthu", "kalignar", " bhavani"]
+        writters1.fill(">^<", 2, 4)
+        console.log(writters1)
+
+        //Array in join()
+        //Defnition: The join() method returns an array as a string. This method takes in your preferred separator as its parameter.
+        //1) remove whiteSpace()
+        let names1 = ["Bhavani", "Viswanathan"]
+        let name11 = names1.join()
+        console.log(name11)
+        //2) remove comma,(" ")
+        let names12 = names1.join(" ")
+        console.log(names12)
+        //3)reduce white space,remove the comma,add to - ("-")
+        let names13 = names1.join("-")
+        console.log(names13)
+
+
+        //toString
+        //Defnition:The toString() method converts an array into a comma-separated string. It's a non-destructive method, meaning it does not change the original array.
+        let nickNames = ["kuttyma", "bow", "bhavani"]
+        let nickname = nickNames.toString()
+        console.log(nickname)//kuttyma,bow,bhavani
+
+        //Iterating over Array Elements
+        //includes()
+
+        let fruits1 = ["Apple", "Strawberries", "Mango", "Lime", "Oranges"];
+        console.log(fruits1.includes("Apple")); // true
+        console.log(fruits1.includes("Apple", 3)); // false
+
+        //every()
+        //1)
+        let usersAge = [22, 56, 75, 33, 22, 80, 12, 43, 23];
+        console.log(usersAge.every((age) => age < 50)); // false
+
+        let arr1 = [25, 35, 40, 50, 57, 58, 59]
+        function checkAge(age) {
+            return age < 50;
+        }
+        console.log(usersAge.every(checkAge));
+
+        //2)
+        //some()
+
+        let entry = [100, 200, 30, 40, 50]
+
+        function checking(validating) {
+            return validating >= 100;
+        }
+        entered = entry.some(checking)
+        console.log(entered)
+
+        //3)
+       // find()
+        let users = [
+            { id: 1, name: "Raj" },
+            { id: 2, name: "Priya" }
+        ];
+
+        let user = users.find(u => u.id === 2);
+        console.log(user);
+
+       //2) 
+         let students = [
+
+            { roll: 1, name: "abinesh" },
+            { roll: 2, name: "archana" },
+            { roll: 3, name: "arulSelvaKumar" },
+            { roll: 4, name: "bhavani" }
+        ]
+        function findRoll4(student) {
+            return student.roll === 4;
+        }
+        let results = students.find(findRoll4);
+        console.log(results)
+        //3) findIndex()
+
+        let jessiNo = [2, 5, 8, 9, 12]
+        function isThereAny5(num) {
+            return num > 5
+        }
+        let jessi = jessiNo.findIndex(isThereAny5)
+        console.log(jessi)
+        //4) indexOf()
+
+        let jessiNo1 = [2, 5, 7, 8, 12]
+        function isThereAny5(num) {
+            return num > 8
+        }
+        let jessis = jessiNo1.indexOf(isThereAny5)
+        console.log(jessis)
+        
+
+    </script>
+
+</body>
+
+</html>

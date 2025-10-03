@@ -1,0 +1,19 @@
+.boot1{
+    width:60%;
+    height:70px;
+    margin-top: 4%;
+   margin-bottom: 2%;
+  
+}
+.work{
+    text-decoration: none;
+}
+.work:hover{
+    text-decoration: underline;
+    color: darkblue;  
+}
+ .work:visited{
+    color:blue;
+    text-decoration: none;
+} 
+ 

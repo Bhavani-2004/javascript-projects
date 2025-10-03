@@ -1,0 +1,23 @@
+.container-tittle{
+    border-bottom: 1px solid rgb(231, 208, 208);
+    box-shadow: 10px 10px 20px 5px rgba(0, 0, 0, 0.1);
+    
+}
+.container-tittle1{
+    border-bottom: 1px solid rgb(231, 208, 208);  
+}
+.row{
+    justify-content: space-between;
+    
+   
+}
+.hr{
+    margin-top:7%;
+color: 1px solid rgb(214, 192, 192);
+
+}
+.boott{
+    width:50%;
+    height:30px;
+  
+}

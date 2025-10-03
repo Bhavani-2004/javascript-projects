@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marks Entry</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        input {
+            margin: 5px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        table {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2> Student Marks Entry</h2>
+
+    <input type="text" id="name" placeholder="Student Name">
+    <input type="number" id="tamil" placeholder="Tamil Marks">
+    <input type="number" id="english" placeholder="English Marks">
+    <input type="number" id="maths" placeholder="Maths Marks">
+    <input type="number" id="science" placeholder="Science Marks">
+    <input type="number" id="social" placeholder="Social Science Marks">
+    <button onclick="submit()">Add Student</button>
+
+    <h3>Student Marks Table</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Tamil</th>
+                <th>English</th>
+                <th>Maths</th>
+                <th>Science</th>
+                <th>Social</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+
+    <script>
+        let MarkList = JSON.parse(localStorage.getItem("MarkList")) || [
+            { name: "Karthi", tamil: 87, english: 55, maths: 45, science: 76, social: 89, total: 352 },
+            { name: "Vibi", tamil: 82, english: 45, maths: 65, science: 86, social: 79, total: 357 },
+            { name: "Vicky", tamil: 55, english: 45, maths: 65, science: 57, social: 69, total: 301 }
+        ];
+
+        // Save to LocalStorage
+        function saveMarks() {
+            localStorage.setItem("MarkList", JSON.stringify(MarkList));
+        }
+
+        // Render Table
+        function renderTable() {
+            const tbody = document.getElementById("tableBody");
+            tbody.innerHTML = "";
+
+            MarkList.forEach(student => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+          <td>${student.name}</td>
+          <td>${student.tamil}</td>
+          <td>${student.english}</td>
+          <td>${student.maths}</td>
+          <td>${student.science}</td>
+          <td>${student.social}</td>
+          <td>${student.total}</td>
+        `;
+
+                tbody.appendChild(row);
+            });
+        }
+
+        // Add New Student
+        function submit() {
+            const name = document.getElementById("name").value.trim();
+            const tamil = parseInt(document.getElementById("tamil").value);
+            const english = parseInt(document.getElementById("english").value);
+            const maths = parseInt(document.getElementById("maths").value);
+            const science = parseInt(document.getElementById("science").value);
+            const social = parseInt(document.getElementById("social").value);
+
+            if (!name || isNaN(tamil) || isNaN(english) || isNaN(maths) || isNaN(science) || isNaN(social)) {
+                alert("Please fill all fields correctly.");
+                return;
+            }
+
+            const total = tamil + english + maths + science + social;
+
+            const newStudent = {
+                name,
+                tamil,
+                english,
+                maths,
+                science,
+                social,
+                total
+            };
+
+            MarkList.push(newStudent);
+            saveMarks();
+            renderTable();
+
+            // Clear inputs
+            document.getElementById("name").value = "";
+            document.getElementById("tamil").value = "";
+            document.getElementById("english").value = "";
+            document.getElementById("maths").value = "";
+            document.getElementById("science").value = "";
+            document.getElementById("social").value = "";
+        }
+
+       
+         renderTable();
+    </script>
+</body>
+
+</html>

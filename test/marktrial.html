@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+
+<body>
+    <h4>mark list entry</h4>
+    <input type="text" id="name" placeholder="enter ypur name">
+    <input type="number" id="tamil" placeholder="enter your tamil marks">
+    <input type="number" id="english" placeholder="enter your english marks">
+    <input type="number" id="maths" placeholder="enter your maths marks">
+    <input type="number" id="science" placeholder="enter your  science marks">
+    <input type="number" id="socialscience" placeholder="enter your  socialscience marks">
+
+    <button onclick="submitMarks()">Submit</button>
+    <h4>Mark list table</h4>
+    <table border="1" cellpadding="5" id="marksTable">
+        <thead>
+            <tr>
+                <th> name</th>
+                <th>tamil</th>
+                <th>english</th>
+                <th>Maths</th>
+                <th>science</th>
+                <th>socialScience</th>
+                <th>total</th>
+
+            </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+    <script>
+
+        let marksheet = JSON.parse(localStorage.getItem("marksheet")) || [
+            { name: "budii", subtamil: 86, subenglish: 80, submaths: 76, subscience: 88, subSocialScience: 90 },
+            { name: "bhavani", subtamil: 86, subenglish: 80, submaths: 76, subscience: 88, subSocialScience: 90 },
+            { name: "bhuvana", subtamil: 86, subenglish: 80, submaths: 76, subscience: 88, subSocialScience: 90 },
+            { name: "bhavi", subtamil: 86, subenglish: 80, submaths: 76, subscience: 88, subSocialScience: 90 }
+        ]
+        function submitMarksToStorag() {
+            localStorage.setItem("marksheet", JSON.stringify(marksheet))
+        }
+        function render() {
+            const tBody = document.getElementById("tbody")
+            tBody.innerHTML = ""
+            console.log(tBody)
+
+            marksheet.forEach(student => {
+                const row = document.createElement("<tr>")
+                row.innerHTML = `
+               <td>${student.tamil}</td>
+               <td>${student.english}</td>
+               <td>${student.maths}</td>
+               <td>${student.scinece}</td>
+               <td>${student.SocialScience}</td> 
+               <td>${student.total}</td>
+               `;
+                tBody.appendchild(row);
+
+            })
+
+        }
+        function submitMarks() {
+            let name = document.elementById("name").value.trim()
+            let tamil = document.ElementById("tamil").value
+            let english = document.ElementById("english").value
+            let maths = document.ElementById("maths").value
+            let science = document.ElementById("science").value
+            let socialscience = document.ElementById("socialscience").value
+            if (!name || isNaNtamil || isNaNenglish || isNaNmaths || isNaNscience || isNaNsocialscience) {
+                alert("please fill the fields properly.")
+                return
+
+                const total = name + tamil + english + maths + science + socialscience;
+            }
+
+
+            const newStudent = {
+                name,
+                tamil,
+                english,
+                maths,
+                science,
+                social,
+                total
+
+            };
+
+            MarkList.push(newStudent);
+            saveMarks();
+            renderTable();
+        }
+        // Clear inputs
+        document.getElementById("name").value = "";
+        document.getElementById("tamil").value = "";
+        document.getElementById("english").value = "";
+        document.getElementById("maths").value = "";
+        document.getElementById("science").value = "";
+        document.getElementById("social").value = "";
+
+        window.onload = renderTable;
+
+
+
+    </script>
+</body>
+
+</html>

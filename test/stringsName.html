@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        //1. String.charAt()
+        //1)
+        const str = "veera Mani";
+        console.log(str.charAt(12))
+        
+
+        //2)
+        let array = ["Veera Mani"]
+        for (i = 0; i < array.length; i++)
+            var arrays = array[i]
+
+        if (arrays.charAt(12)) {
+            console.log("its is charAt condition")
+        }
+        else {
+            console.log("code it properly in charAt ")
+        }
+
+        //3)
+        let peyar = "veera mani"
+        let peyargal = peyar.charAt(5)
+        if (peyargal) {
+            console.log("done")
+        }
+        else {
+            console.log("something went to wrong")
+        }
+        // 2.String.charCodeAt()
+        const b = "Mani Veera"
+        console.log(b.charCodeAt(5))
+
+        //3.String.concat()
+        const ba = "My First Name is:Veera"
+        const ab = "My Last Name is:Mani"
+        console.log(`${ba} ${ab}`)
+        console.log(ba + ab)
+        console.log(ba.concat(ab))
+
+        //4.String.endsWith()
+        let bb = "Veera Mani"
+        console.log(bb.endsWith(("Mani")))
+        // console.log(`${bb}"its is the last name`)
+
+        //5.string.startsWith()
+        //1)
+        let bc = "eera mani"
+        console.log(bc.startsWith("Veera"))
+        // console.log(bc + "its is First Name")
+        // 2)
+        let phoneNumbers = ["+91 878982478", " +81-9345380251", "71-9345380251", "61-9345380251"]
+
+        for (i = 0; i < phoneNumbers.length; i++) {
+            let phoneNumber = phoneNumbers[i]
+            //  console.log(number)
+            let isItStarting = phoneNumber.startsWith("+91")
+            console.log(isItStarting)
+
+            // let isStarts = number.startsWith("indian")
+            // console.log(isStarts)
+            if (isItStarting) {
+                console.log(`${phoneNumber} -this is  the indian number`)
+            }
+            else {
+                console.log(`${phoneNumber}-"not a indian number"`)
+            }
+        }
+
+        //6 String.includes()
+        let included = "Veera Mani"
+        console.log(included.includes("V"))
+
+        //7 String.indexOf()
+        let string = "Veera Mani"
+        console.log(string.indexOf("Mani"))
+
+        //8 string LastindexOf()  
+        const lastStr = "Hello World";
+        console.log(lastStr.lastIndexOf("World"))
+
+        //9 String.match()
+        const sm = "Hello World";
+        console.log(sm.match("H"))
+        //10 String.slice()
+
+        const ss = "Hello World";
+       console.log(ss.slice(1)) ; 
+
+       //10  indexOf()
+       const findIndex = "Hello World";
+       console.log(findIndex.indexOf("World"))
+
+       
+
+    </script>
+</body>
+
+</html>

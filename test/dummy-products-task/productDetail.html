@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Product Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      background-color: #f9f9f9;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+    }
+    h2 {
+      color: #c2185b;
+    }
+    .section {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+    }
+    ul {
+      padding-left: 20px;
+    }
+    .review {
+      background: #f1f1f1;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="productDetails">Loading...</div>
+
+  <script>
+    // Helper to get ID from URL
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    console.log(id)
+
+
+
+    fetch(`https://dummyjson.com/products/${id}`)
+      .then(res => res.json())
+      .then(product => {
+       
+        const container = document.getElementById('productDetails');
+        container.innerHTML = `
+          <h1>${product.title}</h1>
+          <img src="${product.thumbnail}" alt="${product.title}" />
+          <p><strong>Description:</strong> ${product.description}</p>
+
+          <div class="section">
+            <h2>Product Info</h2>
+            <p><strong>Category:</strong> ${product.category}</p>
+            <p><strong>Brand:</strong> ${product.brand}</p>
+            <p><strong>SKU:</strong> ${product.sku}</p>
+            <p><strong>Price:</strong> ₹${product.price.toFixed(2)}</p>
+            <p><strong>Discount:</strong> ${product.discountPercentage}%</p>
+            <p><strong>Rating:</strong> ⭐ ${product.rating}</p>
+            <p><strong>Stock:</strong> ${product.stock}</p>
+            <p><strong>Availability:</strong> ${product.availabilityStatus}</p>
+            <p><strong>Minimum Order Quantity:</strong> ${product.minimumOrderQuantity}</p>
+            <p><strong>Tags:</strong> ${product.tags.join(', ')}</p>
+          </div>
+
+          <div class="section">
+            <h2>Dimensions & Weight</h2>
+            <p><strong>Weight:</strong> ${product.weight} g</p>
+            <p><strong>Width:</strong> ${product.dimensions.width} mm</p>
+            <p><strong>Height:</strong> ${product.dimensions.height} mm</p>
+            <p><strong>Depth:</strong> ${product.dimensions.depth} mm</p>
+          </div>
+
+          <div class="section">
+            <h2>Shipping & Warranty</h2>
+            <p><strong>Warranty:</strong> ${product.warrantyInformation}</p>
+            <p><strong>Shipping Info:</strong> ${product.shippingInformation}</p>
+            <p><strong>Return Policy:</strong> ${product.returnPolicy}</p>
+          </div>
+
+          <div class="section">
+            <h2>QR Code</h2>
+            <img src="${product.meta.qrCode}" alt="QR Code" width="150" />
+            <p><strong>Barcode:</strong> ${product.meta.barcode}</p>
+          </div>
+
+          <div class="section">
+            <h2>Reviews</h2>
+            ${product.reviews.map(r => `
+              <div class="review">
+                <p><strong>${r.reviewerName}</strong> (${r.rating}⭐)</p>
+                <p>${r.comment}</p>
+                <p><em>${new Date(r.date).toLocaleDateString()}</em></p>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      })
+      .catch(error => {
+        document.getElementById('productDetails').innerHTML = '<p style="color:red;">Failed to load product details.</p>';
+        console.error(error);
+      });
+
+    console.log(4+5)
+
+  </script>
+</body>
+</html>

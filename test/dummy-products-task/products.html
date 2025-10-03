@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Beauty Products</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <header class="site-header">
+    <h1>💄 Beauty & Glam Store ✨</h1>
+    <p class="tagline">Find your perfect look ❤️</p>
+  </header>
+  <section class="product-grid" id="productContainer"></section>
+
+  <script>
+
+    fetch('https://dummyjson.com/products')
+      .then(response => response.json())
+      .then(data => {
+        const container = document.getElementById('productContainer');
+        data.products.forEach(product => {
+          const card = document.createElement('div');
+          card.className = 'card';
+
+          card.innerHTML = `
+      <a href="./productDetail.html?id=${product.id}">
+ <img src="${product.images[0]}" alt="${product.title}"></a>
+        <div class="card-body">
+          <h3 class="card-title">${product.title}</h3>
+          <p class="card-description">${product.description}</p>
+          <div class="card-footer">
+            <span>₹${product.price.toFixed(2)}</span>
+            <span>⭐ ${product.rating}</span>
+          </div>
+        </div>
+      `;
+          container.appendChild(card);
+        });
+      })
+      .catch(error => {
+        console.error('Failed to load product data:', error);
+      });
+
+  </script>
+</body>
+
+</html>

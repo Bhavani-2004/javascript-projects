@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Sri Ranganathar</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ✅ Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+  <div class="container my-5">
+    <div class="card shadow p-4">
+      <h2 class="text-center mb-4 text-primary">🎓 College Eligibility Checker</h2>
+
+      <div class="mb-3">
+        <label for="maths" class="form-label">Maths:</label>
+        <input type="number" id="maths" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="physics" class="form-label">Physics:</label>
+        <input type="number" id="physics" class="form-control">
+      </div>
+
+      <div class="mb-3">
+        <label for="chemistry" class="form-label">Chemistry:</label>
+        <input type="number" id="chemistry" class="form-control">
+      </div>
+
+      <div class="d-grid gap-2">
+        <button onclick="calculateCutoffs()" class="btn btn-success">Check Eligibility</button>
+      </div>
+
+      <h4 id="engResult" class="text-center mt-4 text-info"></h4>
+
+      <div id="collegeSection" class="mt-4" style="display: none;">
+        <h5>Select Eligible College</h5>
+
+        <select id="collegeSelect" class="form-select mb-3" onchange="collageEligibility()">
+          <option value="">-- Select College --</option>
+        </select> 
+
+
+        <!-- <button onclick="collageEligibility()" class="btn btn-primary">Search</button> -->
+
+        <div id="collegeResult" class="mt-3 alert alert-info"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let colleges = [{
+      address: "179 College Road, Chennai, Tamil Nadu",
+      code: 1,
+      cutoff: 178,
+      name: "Engineering College 001"
+    }, {
+      address: "125 College Road, Pudukkottai, Tamil Nadu",
+      code: 2,
+      cutoff: 174,
+      name: "Engineering College 002"
+    }, {
+      address: "59 College Road, Thanjavur, Tamil Nadu",
+      code: 3,
+      cutoff: 190,
+      name: "Engineering College 003"
+    }, {
+      address: "124 College Road, Salem, Tamil Nadu",
+      code: 4,
+      cutoff: 162,
+      name: "Engineering College 004"
+    }, {
+      address: "146 College Road, Coimbatore, Tamil Nadu",
+      code: 5,
+      cutoff: 165,
+      name: "Engineering College 005"
+    }, {
+      address: "165 College Road, Tiruvallur, Tamil Nadu",
+      code: 6,
+      cutoff: 176,
+      name: "Engineering College 006"
+    }, {
+      address: "93 College Road, Dindigul, Tamil Nadu",
+      code: 7,
+      cutoff: 177,
+      name: "Engineering College 007"
+    }, {
+      address: "109 College Road, Tirunelveli, Tamil Nadu",
+      code: 8,
+      cutoff: 191,
+      name: "Engineering College 008"
+    }, {
+      address: "132 College Road, Trichy, Tamil Nadu",
+      code: 9,
+      cutoff: 187,
+      name: "Engineering College 009"
+    }, {
+      address: "38 College Road, Vellore, Tamil Nadu",
+      code: 10,
+      cutoff: 148,
+      name: "Engineering College 010"
+    }, {
+      address: "61 College Road, Namakkal, Tamil Nadu",
+      code: 11,
+      cutoff: 170,
+      name: "Engineering College 011"
+    }, {
+      address: "122 College Road, Nagapattinam, Tamil Nadu",
+      code: 12,
+      cutoff: 175,
+      name: "Engineering College 012"
+    }, {
+      address: "151 College Road, Coimbatore, Tamil Nadu",
+      code: 13,
+      cutoff: 199,
+      name: "Engineering College 013"
+    }, {
+      address: "39 College Road, Madurai, Tamil Nadu",
+      code: 14,
+      cutoff: 177,
+      name: "Engineering College 014"
+    }, {
+      address: "180 College Road, Dindigul, Tamil Nadu",
+      code: 15,
+      cutoff: 151,
+      name: "Engineering College 015"
+    }, {
+      address: "105 College Road, Thanjavur, Tamil Nadu",
+      code: 16,
+      cutoff: 155,
+      name: "Engineering College 016"
+    }, {
+      address: "156 College Road, Kanchipuram, Tamil Nadu",
+      code: 17,
+      cutoff: 159,
+      name: "Engineering College 017"
+    }, {
+      address: "90 College Road, Tiruvallur, Tamil Nadu",
+      code: 18,
+      cutoff: 159,
+      name: "Engineering College 018"
+    }, {
+      address: "25 College Road, Namakkal, Tamil Nadu",
+      code: 19,
+      cutoff: 159,
+      name: "Engineering College 019"
+    }, {
+      address: "132 College Road, Tiruvallur, Tamil Nadu",
+      code: 20,
+      cutoff: 197,
+      name: "Engineering College 020"
+    }, {
+      address: "60 College Road, Thanjavur, Tamil Nadu",
+      code: 21,
+      cutoff: 198,
+      name: "Engineering College 021"
+    }, {
+      address: "151 College Road, Karur, Tamil Nadu",
+      code: 22,
+      cutoff: 170,
+      name: "Engineering College 022"
+    }, {
+      address: "175 College Road, Chennai, Tamil Nadu",
+      code: 23,
+      cutoff: 143,
+      name: "Engineering College 023"
+    }, {
+      address: "163 College Road, Tiruvallur, Tamil Nadu",
+      code: 24,
+      cutoff: 196,
+      name: "Engineering College 024"
+    }, {
+      address: "44 College Road, Nagapattinam, Tamil Nadu",
+      code: 25,
+      cutoff: 179,
+      name: "Engineering College 025"
+    }, {
+      address: "155 College Road, Coimbatore, Tamil Nadu",
+      code: 26,
+      cutoff: 195,
+      name: "Engineering College 026"
+    }, {
+      address: "66 College Road, Tiruppur, Tamil Nadu",
+      code: 27,
+      cutoff: 200,
+      name: "Engineering College 027"
+    }, {
+      address: "150 College Road, Trichy, Tamil Nadu",
+      code: 28,
+      cutoff: 183,
+      name: "Engineering College 028"
+    }, {
+      address: "82 College Road, Trichy, Tamil Nadu",
+      code: 29,
+      cutoff: 169,
+      name: "Engineering College 029"
+    }, {
+      address: "19 College Road, Kanchipuram, Tamil Nadu",
+      code: 30,
+      cutoff: 156,
+      name: "Engineering College 030"
+    }, {
+      address: "78 College Road, Dindigul, Tamil Nadu",
+      code: 31,
+      cutoff: 193,
+      name: "Engineering College 031"
+    }, {
+      address: "100 College Road, Karur, Tamil Nadu",
+      code: 32,
+      cutoff: 142,
+      name: "Engineering College 032"
+    }, {
+      address: "128 College Road, Namakkal, Tamil Nadu",
+      code: 33,
+      cutoff: 186,
+      name: "Engineering College 033"
+    }, {
+      address: "139 College Road, Tiruppur, Tamil Nadu",
+      code: 34,
+      cutoff: 174,
+      name: "Engineering College 034"
+    }, {
+      address: "7 College Road, Madurai, Tamil Nadu",
+      code: 35,
+      cutoff: 190,
+      name: "Engineering College 035"
+    }, {
+      address: "76 College Road, Karur, Tamil Nadu",
+      code: 36,
+      cutoff: 167,
+      name: "Engineering College 036"
+    }, {
+      address: "176 College Road, Coimbatore, Tamil Nadu",
+      code: 37,
+      cutoff: 169,
+      name: "Engineering College 037"
+    }, {
+      address: "123 College Road, Coimbatore, Tamil Nadu",
+      code: 38,
+      cutoff: 146,
+      name: "Engineering College 038"
+    }, {
+      address: "183 College Road, Dindigul, Tamil Nadu",
+      code: 39,
+      cutoff: 146,
+      name: "Engineering College 039"
+    }, {
+      address: "177 College Road, Kanchipuram, Tamil Nadu",
+      code: 40,
+      cutoff: 177,
+      name: "Engineering College 040"
+    }, {
+      address: "179 College Road, Kanchipuram, Tamil Nadu",
+      code: 41,
+      cutoff: 176,
+      name: "Engineering College 041"
+    }, {
+      address: "126 College Road, Nagapattinam, Tamil Nadu",
+      code: 42,
+      cutoff: 180,
+      name: "Engineering College 042"
+    }, {
+      address: "27 College Road, Tiruppur, Tamil Nadu",
+      code: 43,
+      cutoff: 189,
+      name: "Engineering College 043"
+    }, {
+      address: "84 College Road, Nagapattinam, Tamil Nadu",
+      code: 44,
+      cutoff: 177,
+      name: "Engineering College 044"
+    }, {
+      address: "19 College Road, Tiruvallur, Tamil Nadu",
+      code: 45,
+      cutoff: 153,
+      name: "Engineering College 045"
+    }, {
+      address: "174 College Road, Trichy, Tamil Nadu",
+      code: 46,
+      cutoff: 145,
+      name: "Engineering College 046"
+    }, {
+      address: "65 College Road, Virudhunagar, Tamil Nadu",
+      code: 47,
+      cutoff: 176,
+      name: "Engineering College 047"
+    }, {
+      address: "121 College Road, Trichy, Tamil Nadu",
+      code: 48,
+      cutoff: 146,
+      name: "Engineering College 048"
+    }, {
+      address: "13 College Road, Nagapattinam, Tamil Nadu",
+      code: 49,
+      cutoff: 199,
+      name: "Engineering College 049"
+    }, {
+      address: "13 College Road, Vellore, Tamil Nadu",
+      code: 50,
+      cutoff: 189,
+      name: "Engineering College 050"
+    }, {
+      address: "163 College Road, Tiruppur, Tamil Nadu",
+      code: 51,
+      cutoff: 186,
+      name: "Engineering College 051"
+    }, {
+      address: "198 College Road, Chennai, Tamil Nadu",
+      code: 52,
+      cutoff: 169,
+      name: "Engineering College 052"
+    }, {
+      address: "199 College Road, Theni, Tamil Nadu",
+      code: 53,
+      cutoff: 191,
+      name: "Engineering College 053"
+    }, {
+      address: "113 College Road, Namakkal, Tamil Nadu",
+      code: 54,
+      cutoff: 171,
+      name: "Engineering College 054"
+    }, {
+      address: "144 College Road, Erode, Tamil Nadu",
+      code: 55,
+      cutoff: 147,
+      name: "Engineering College 055"
+    }, {
+      address: "48 College Road, Dindigul, Tamil Nadu",
+      code: 56,
+      cutoff: 180,
+      name: "Engineering College 056"
+    }, {
+      address: "118 College Road, Dindigul, Tamil Nadu",
+      code: 57,
+      cutoff: 176,
+      name: "Engineering College 057"
+    }, {
+      address: "129 College Road, Erode, Tamil Nadu",
+      code: 58,
+      cutoff: 145,
+      name: "Engineering College 058"
+    }, {
+      address: "27 College Road, Chennai, Tamil Nadu",
+      code: 59,
+      cutoff: 140,
+      name: "Engineering College 059"
+    }, {
+      address: "66 College Road, Thanjavur, Tamil Nadu",
+      code: 60,
+      cutoff: 152,
+      name: "Engineering College 060"
+    }, {
+      address: "169 College Road, Trichy, Tamil Nadu",
+      code: 61,
+      cutoff: 196,
+      name: "Engineering College 061"
+    }, {
+      address: "32 College Road, Krishnagiri, Tamil Nadu",
+      code: 62,
+      cutoff: 169,
+      name: "Engineering College 062"
+    }, {
+      address: "131 College Road, Virudhunagar, Tamil Nadu",
+      code: 63,
+      cutoff: 190,
+      name: "Engineering College 063"
+    }, {
+      address: "112 College Road, Pudukkottai, Tamil Nadu",
+      code: 64,
+      cutoff: 182,
+      name: "Engineering College 064"
+    }, {
+      address: "41 College Road, Kanchipuram, Tamil Nadu",
+      code: 65,
+      cutoff: 173,
+      name: "Engineering College 065"
+    }, {
+      address: "149 College Road, Theni, Tamil Nadu",
+      code: 66,
+      cutoff: 163,
+      name: "Engineering College 066"
+    }, {
+      address: "34 College Road, Theni, Tamil Nadu",
+      code: 67,
+      cutoff: 166,
+      name: "Engineering College 067"
+    }, {
+      address: "185 College Road, Coimbatore, Tamil Nadu",
+      code: 68,
+      cutoff: 192,
+      name: "Engineering College 068"
+    }, {
+      address: "78 College Road, Krishnagiri, Tamil Nadu",
+      code: 69,
+      cutoff: 169,
+      name: "Engineering College 069"
+    }, {
+      address: "56 College Road, Coimbatore, Tamil Nadu",
+      code: 70,
+      cutoff: 142,
+      name: "Engineering College 070"
+    }, {
+      address: "1 College Road, Virudhunagar, Tamil Nadu",
+      code: 71,
+      cutoff: 156,
+      name: "Engineering College 071"
+    }, {
+      address: "198 College Road, Nagapattinam, Tamil Nadu",
+      code: 72,
+      cutoff: 148,
+      name: "Engineering College 072"
+    }, {
+      address: "167 College Road, Tirunelveli, Tamil Nadu",
+      code: 73,
+      cutoff: 196,
+      name: "Engineering College 073"
+    }, {
+      address: "121 College Road, Vellore, Tamil Nadu",
+      code: 74,
+      cutoff: 166,
+      name: "Engineering College 074"
+    }, {
+      address: "54 College Road, Thanjavur, Tamil Nadu",
+      code: 75,
+      cutoff: 147,
+      name: "Engineering College 075"
+    }, {
+      address: "21 College Road, Tiruvallur, Tamil Nadu",
+      code: 76,
+      cutoff: 160,
+      name: "Engineering College 076"
+    }, {
+      address: "162 College Road, Tiruvallur, Tamil Nadu",
+      code: 77,
+      cutoff: 159,
+      name: "Engineering College 077"
+    }, {
+      address: "46 College Road, Chennai, Tamil Nadu",
+      code: 78,
+      cutoff: 182,
+      name: "Engineering College 078"
+    }, {
+      address: "185 College Road, Erode, Tamil Nadu",
+      code: 79,
+      cutoff: 198,
+      name: "Engineering College 079"
+    }, {
+      address: "158 College Road, Vellore, Tamil Nadu",
+      code: 80,
+      cutoff: 157,
+      name: "Engineering College 080"
+    }, {
+      address: "109 College Road, Madurai, Tamil Nadu",
+      code: 81,
+      cutoff: 153,
+      name: "Engineering College 081"
+    }, {
+      address: "66 College Road, Vellore, Tamil Nadu",
+      code: 82,
+      cutoff: 144,
+      name: "Engineering College 082"
+    }, {
+      address: "111 College Road, Vellore, Tamil Nadu",
+      code: 83,
+      cutoff: 180,
+      name: "Engineering College 083"
+    }, {
+      address: "114 College Road, Nagapattinam, Tamil Nadu",
+      code: 84,
+      cutoff: 167,
+      name: "Engineering College 084"
+    }, {
+      address: "65 College Road, Tirunelveli, Tamil Nadu",
+      code: 85,
+      cutoff: 161,
+      name: "Engineering College 085"
+    }, {
+      address: "106 College Road, Namakkal, Tamil Nadu",
+      code: 86,
+      cutoff: 158,
+      name: "Engineering College 086"
+    }, {
+      address: "60 College Road, Tiruvallur, Tamil Nadu",
+      code: 87,
+      cutoff: 154,
+      name: "Engineering College 087"
+    }, {
+      address: "127 College Road, Tiruppur, Tamil Nadu",
+      code: 88,
+      cutoff: 161,
+      name: "Engineering College 088"
+    }, {
+      address: "161 College Road, Tirunelveli, Tamil Nadu",
+      code: 89,
+      cutoff: 175,
+      name: "Engineering College 089"
+    }, {
+      address: "193 College Road, Erode, Tamil Nadu",
+      code: 90,
+      cutoff: 167,
+      name: "Engineering College 090"
+    }, {
+      address: "76 College Road, Madurai, Tamil Nadu",
+      code: 91,
+      cutoff: 160,
+      name: "Engineering College 091"
+    }, {
+      address: "21 College Road, Coimbatore, Tamil Nadu",
+      code: 92,
+      cutoff: 149,
+      name: "Engineering College 092"
+    }, {
+      address: "158 College Road, Coimbatore, Tamil Nadu",
+      code: 93,
+      cutoff: 196,
+      name: "Engineering College 093"
+    }, {
+      address: "134 College Road, Pudukkottai, Tamil Nadu",
+      code: 94,
+      cutoff: 188,
+      name: "Engineering College 094"
+    }, {
+      address: "103 College Road, Theni, Tamil Nadu",
+      code: 95,
+      cutoff: 145,
+      name: "Engineering College 095"
+    }, {
+      address: "36 College Road, Trichy, Tamil Nadu",
+      code: 96,
+      cutoff: 147,
+      name: "Engineering College 096"
+    }, {
+      address: "138 College Road, Salem, Tamil Nadu",
+      code: 97,
+      cutoff: 178,
+      name: "Engineering College 097"
+    }, {
+      address: "162 College Road, Vellore, Tamil Nadu",
+      code: 98,
+      cutoff: 164,
+      name: "Engineering College 098"
+    }, {
+      address: "17 College Road, Vellore, Tamil Nadu",
+      code: 99,
+      cutoff: 140,
+      name: "Engineering College 099"
+    }, {
+      address: "192 College Road, Salem, Tamil Nadu",
+      code: 100,
+      cutoff: 193,
+      name: "Engineering College 100"
+    }, {
+      address: "4 College Road, Tiruppur, Tamil Nadu",
+      code: 101,
+      cutoff: 180,
+      name: "Engineering College 101"
+    }, {
+      address: "138 College Road, Erode, Tamil Nadu",
+      code: 102,
+      cutoff: 153,
+      name: "Engineering College 102"
+    }, {
+      address: "60 College Road, Nagapattinam, Tamil Nadu",
+      code: 103,
+      cutoff: 174,
+      name: "Engineering College 103"
+    }, {
+      address: "182 College Road, Nagapattinam, Tamil Nadu",
+      code: 104,
+      cutoff: 191,
+      name: "Engineering College 104"
+    }, {
+      address: "63 College Road, Thanjavur, Tamil Nadu",
+      code: 105,
+      cutoff: 179,
+      name: "Engineering College 105"
+    }, {
+      address: "68 College Road, Dindigul, Tamil Nadu",
+      code: 106,
+      cutoff: 171,
+      name: "Engineering College 106"
+    }, {
+      address: "111 College Road, Trichy, Tamil Nadu",
+      code: 107,
+      cutoff: 150,
+      name: "Engineering College 107"
+    }, {
+      address: "23 College Road, Nagapattinam, Tamil Nadu",
+      code: 108,
+      cutoff: 171,
+      name: "Engineering College 108"
+    }, {
+      address: "65 College Road, Virudhunagar, Tamil Nadu",
+      code: 109,
+      cutoff: 157,
+      name: "Engineering College 109"
+    }, {
+      address: "191 College Road, Nagapattinam, Tamil Nadu",
+      code: 110,
+      cutoff: 161,
+      name: "Engineering College 110"
+    }, {
+      address: "186 College Road, Trichy, Tamil Nadu",
+      code: 111,
+      cutoff: 145,
+      name: "Engineering College 111"
+    }, {
+      address: "98 College Road, Salem, Tamil Nadu",
+      code: 112,
+      cutoff: 168,
+      name: "Engineering College 112"
+    }, {
+      address: "196 College Road, Tirunelveli, Tamil Nadu",
+      code: 113,
+      cutoff: 148,
+      name: "Engineering College 113"
+    }, {
+      address: "7 College Road, Erode, Tamil Nadu",
+      code: 114,
+      cutoff: 155,
+      name: "Engineering College 114"
+    }, {
+      address: "170 College Road, Tirunelveli, Tamil Nadu",
+      code: 115,
+      cutoff: 157,
+      name: "Engineering College 115"
+    }, {
+      address: "102 College Road, Tirunelveli, Tamil Nadu",
+      code: 116,
+      cutoff: 154,
+      name: "Engineering College 116"
+    }, {
+      address: "40 College Road, Vellore, Tamil Nadu",
+      code: 117,
+      cutoff: 196,
+      name: "Engineering College 117"
+    }, {
+      address: "17 College Road, Tirunelveli, Tamil Nadu",
+      code: 118,
+      cutoff: 159,
+      name: "Engineering College 118"
+    }, {
+      address: "143 College Road, Vellore, Tamil Nadu",
+      code: 119,
+      cutoff: 195,
+      name: "Engineering College 119"
+    }, {
+      address: "19 College Road, Theni, Tamil Nadu",
+      code: 120,
+      cutoff: 159,
+      name: "Engineering College 120"
+    }, {
+      address: "117 College Road, Erode, Tamil Nadu",
+      code: 121,
+      cutoff: 193,
+      name: "Engineering College 121"
+    }, {
+      address: "184 College Road, Virudhunagar, Tamil Nadu",
+      code: 122,
+      cutoff: 142,
+      name: "Engineering College 122"
+    }, {
+      address: "184 College Road, TRK, Tamil Nadu",
+      code: 123,
+      cutoff: 130,
+      name: "Engineering College 122"
+    }, {
+      address: "49 College Road, Coimbatore, Tamil Nadu",
+      code: 124,
+      cutoff: 150,
+      name: "Engineering College 123"
+    }, {
+      address: "80 College Road, Coimbatore, Tamil Nadu",
+      code: 125,
+      cutoff: 152,
+      name: "Engineering College 124"
+    }, {
+      address: "154 College Road, Chennai, Tamil Nadu",
+      code: 126,
+      cutoff: 159,
+      name: "Engineering College 125"
+    }, {
+      address: "95 College Road, Virudhunagar, Tamil Nadu",
+      code: 127,
+      cutoff: 142,
+      name: "Engineering College 126"
+    }, {
+      address: "141 College Road, Nagapattinam, Tamil Nadu",
+      code: 128,
+      cutoff: 170,
+      name: "Engineering College 127"
+    }, {
+      address: "49 College Road, Coimbatore, Tamil Nadu",
+      code: 129,
+      cutoff: 174,
+      name: "Engineering College 128"
+    }, {
+      address: "95 College Road, Namakkal, Tamil Nadu",
+      code: 130,
+      cutoff: 186,
+      name: "Engineering College 129"
+    }, {
+      address: "115 College Road, Nagapattinam, Tamil Nadu",
+      code: 131,
+      cutoff: 192,
+      name: "Engineering College 130"
+    }, {
+      address: "185 College Road, Tiruppur, Tamil Nadu",
+      code: 132,
+      cutoff: 185,
+      name: "Engineering College 131"
+    }, {
+      address: "61 College Road, Chennai, Tamil Nadu",
+      code: 133,
+      cutoff: 158,
+      name: "Engineering College 132"
+    }, {
+      address: "173 College Road, Virudhunagar, Tamil Nadu",
+      code: 134,
+      cutoff: 146,
+      name: "Engineering College 133"
+    }, {
+      address: "108 College Road, Salem, Tamil Nadu",
+      code: 135,
+      cutoff: 160,
+      name: "Engineering College 134"
+    }, {
+      address: "171 College Road, Coimbatore, Tamil Nadu",
+      code: 136,
+      cutoff: 170,
+      name: "Engineering College 135"
+    }, {
+      address: "168 College Road, Tiruvallur, Tamil Nadu",
+      code: 137,
+      cutoff: 159,
+      name: "Engineering College 136"
+    }, {
+      address: "16 College Road, Virudhunagar, Tamil Nadu",
+      code: 138,
+      cutoff: 168,
+      name: "Engineering College 137"
+    }, {
+      address: "88 College Road, Salem, Tamil Nadu",
+      code: 139,
+      cutoff: 156,
+      name: "Engineering College 138"
+    }, {
+      address: "33 College Road, Dindigul, Tamil Nadu",
+      code: 140,
+      cutoff: 151,
+      name: "Engineering College 139"
+    }, {
+      address: "135 College Road, Tiruppur, Tamil Nadu",
+      code: 141,
+      cutoff: 144,
+      name: "Engineering College 140"
+    }, {
+      address: "21 College Road, Madurai, Tamil Nadu",
+      code: 142,
+      cutoff: 180,
+      name: "Engineering College 141"
+    }, {
+      address: "165 College Road, Thanjavur, Tamil Nadu",
+      code: 143,
+      cutoff: 192,
+      name: "Engineering College 142"
+    }, {
+      address: "103 College Road, Erode, Tamil Nadu",
+      code: 144,
+      cutoff: 150,
+      name: "Engineering College 143"
+    }, {
+      address: "19 College Road, Tiruvallur, Tamil Nadu",
+      code: 145,
+      cutoff: 194,
+      name: "Engineering College 144"
+    }, {
+      address: "148 College Road, Theni, Tamil Nadu",
+      code: 146,
+      cutoff: 184,
+      name: "Engineering College 145"
+    }, {
+      address: "81 College Road, Trichy, Tamil Nadu",
+      code: 147,
+      cutoff: 164,
+      name: "Engineering College 146"
+    }, {
+      address: "10 College Road, Tiruppur, Tamil Nadu",
+      code: 148,
+      cutoff: 143,
+      name: "Engineering College 147"
+    }, {
+      address: "86 College Road, Salem, Tamil Nadu",
+      code: 149,
+      cutoff: 169,
+      name: "Engineering College 148"
+    }, {
+      address: "43 College Road, Kanchipuram, Tamil Nadu",
+      code: 150,
+      cutoff: 175,
+      name: "Engineering College 149"
+    }, {
+      address: "167 College Road, Dindigul, Tamil Nadu",
+      code: 151,
+      cutoff: 197,
+      name: "Engineering College 150"
+    }, {
+      address: "47 College Road, Namakkal, Tamil Nadu",
+      code: 152,
+      cutoff: 141,
+      name: "Engineering College 151"
+    }, {
+      address: "120 College Road, Tiruppur, Tamil Nadu",
+      code: 153,
+      cutoff: 157,
+      name: "Engineering College 152"
+    }, {
+      address: "129 College Road, Kanchipuram, Tamil Nadu",
+      code: 154,
+      cutoff: 197,
+      name: "Engineering College 153"
+    }, {
+      address: "21 College Road, Namakkal, Tamil Nadu",
+      code: 155,
+      cutoff: 181,
+      name: "Engineering College 154"
+    }, {
+      address: "169 College Road, Trichy, Tamil Nadu",
+      code: 156,
+      cutoff: 151,
+      name: "Engineering College 155"
+    }, {
+      address: "153 College Road, Nagapattinam, Tamil Nadu",
+      code: 157,
+      cutoff: 188,
+      name: "Engineering College 156"
+    }, {
+      address: "160 College Road, Pudukkottai, Tamil Nadu",
+      code: 158,
+      cutoff: 163,
+      name: "Engineering College 157"
+    }, {
+      address: "73 College Road, Erode, Tamil Nadu",
+      code: 159,
+      cutoff: 144,
+      name: "Engineering College 158"
+    }, {
+      address: "76 College Road, Vellore, Tamil Nadu",
+      code: 160,
+      cutoff: 196,
+      name: "Engineering College 159"
+    }, {
+      address: "109 College Road, Dindigul, Tamil Nadu",
+      code: 161,
+      cutoff: 171,
+      name: "Engineering College 160"
+    }, {
+      address: "103 College Road, Dindigul, Tamil Nadu",
+      code: 162,
+      cutoff: 168,
+      name: "PSG"
+    }, {
+      address: "27 College Road, Karur, Tamil Nadu",
+      code: 163,
+      cutoff: 167,
+      name: "SRIET"
+    }, {
+      address: "159 College Road, Krishnagiri, Tamil Nadu",
+      code: 164,
+      cutoff: 183,
+      name: "CET"
+    }, {
+      address: "159 College Road, Nagapattinam, Tamil Nadu",
+      code: 165,
+      cutoff: 167,
+      name: "info"
+    }, {
+      address: "22 College Road, Namakkal, Tamil Nadu",
+      code: 166,
+      cutoff: 173,
+      name: "Sri Sakthi"
+    }, {
+      address: "19 College Road, Vellore, Tamil Nadu",
+      code: 167,
+      cutoff: 192,
+      name: "Engineering College 166"
+    }, {
+      address: "6 College Road, Coimbatore, Tamil Nadu",
+      code: 168,
+      cutoff: 179,
+      name: "Engineering College 167"
+    }, {
+      address: "41 College Road, Theni, Tamil Nadu",
+      code: 169,
+      cutoff: 146,
+      name: "Engineering College 168"
+    }, {
+      address: "138 College Road, Chennai, Tamil Nadu",
+      code: 170,
+      cutoff: 196,
+      name: "Engineering College 169"
+    }, {
+      address: "58 College Road, Theni, Tamil Nadu",
+      code: 171,
+      cutoff: 150,
+      name: "Engineering College 170"
+    }, {
+      address: "30 College Road, Dindigul, Tamil Nadu",
+      code: 172,
+      cutoff: 172,
+      name: "Engineering College 171"
+    }, {
+      address: "110 College Road, Salem, Tamil Nadu",
+      code: 173,
+      cutoff: 153,
+      name: "Engineering College 172"
+    }, {
+      address: "19 College Road, Karur, Tamil Nadu",
+      code: 174,
+      cutoff: 184,
+      name: "Engineering College 173"
+    }, {
+      address: "163 College Road, Trichy, Tamil Nadu",
+      code: 175,
+      cutoff: 158,
+      name: "Engineering College 174"
+    }, {
+      address: "121 College Road, Trichy, Tamil Nadu",
+      code: 176,
+      cutoff: 176,
+      name: "Engineering College 175"
+    }, {
+      address: "10 College Road, Coimbatore, Tamil Nadu",
+      code: 177,
+      cutoff: 159,
+      name: "Engineering College 176"
+    }, {
+      address: "81 College Road, Chennai, Tamil Nadu",
+      code: 178,
+      cutoff: 188,
+      name: "Engineering College 177"
+    }, {
+      address: "107 College Road, Kanchipuram, Tamil Nadu",
+      code: 179,
+      cutoff: 154,
+      name: "Engineering College 178"
+    }, {
+      address: "87 College Road, Thanjavur, Tamil Nadu",
+      code: 180,
+      cutoff: 168,
+      name: "Engineering College 179"
+    }, {
+      address: "148 College Road, Pudukkottai, Tamil Nadu",
+      code: 181,
+      cutoff: 148,
+      name: "Engineering College 180"
+    }, {
+      address: "140 College Road, Tiruvallur, Tamil Nadu",
+      code: 182,
+      cutoff: 148,
+      name: "Engineering College 181"
+    }, {
+      address: "30 College Road, Thanjavur, Tamil Nadu",
+      code: 183,
+      cutoff: 175,
+      name: "Engineering College 182"
+    }, {
+      address: "144 College Road, Dindigul, Tamil Nadu",
+      code: 184,
+      cutoff: 188,
+      name: "Engineering College 183"
+    }, {
+      address: "86 College Road, Theni, Tamil Nadu",
+      code: 185,
+      cutoff: 182,
+      name: "Engineering College 184"
+    }, {
+      address: "56 College Road, Tirunelveli, Tamil Nadu",
+      code: 186,
+      cutoff: 155,
+      name: "Engineering College 185"
+    }, {
+      address: "192 College Road, Krishnagiri, Tamil Nadu",
+      code: 187,
+      cutoff: 166,
+      name: "Engineering College 186"
+    }, {
+      address: "145 College Road, Thanjavur, Tamil Nadu",
+      code: 188,
+      cutoff: 163,
+      name: "Engineering College 187"
+    }, {
+      address: "119 College Road, Karur, Tamil Nadu",
+      code: 189,
+      cutoff: 164,
+      name: "Engineering College 188"
+    }, {
+      address: "187 College Road, Vellore, Tamil Nadu",
+      code: 190,
+      cutoff: 154,
+      name: "Engineering College 189"
+    }, {
+      address: "91 College Road, Tiruppur, Tamil Nadu",
+      code: 191,
+      cutoff: 176,
+      name: "Engineering College 190"
+    }, {
+      address: "55 College Road, Virudhunagar, Tamil Nadu",
+      code: 192,
+      cutoff: 157,
+      name: "Engineering College 191"
+    }, {
+      address: "168 College Road, Tirunelveli, Tamil Nadu",
+      code: 193,
+      cutoff: 154,
+      name: "Engineering College 192"
+    }, {
+      address: "125 College Road, Vellore, Tamil Nadu",
+      code: 194,
+      cutoff: 181,
+      name: "Engineering College 193"
+    }, {
+      address: "12 College Road, Virudhunagar, Tamil Nadu",
+      code: 195,
+      cutoff: 199,
+      name: "Engineering College 194"
+    }, {
+      address: "46 College Road, Tiruppur, Tamil Nadu",
+      code: 196,
+      cutoff: 164,
+      name: "Engineering College 195"
+    }, {
+      address: "85 College Road, Coimbatore, Tamil Nadu",
+      code: 197,
+      cutoff: 158,
+      name: "Engineering College 196"
+    }, {
+      address: "178 College Road, Trichy, Tamil Nadu",
+      code: 198,
+      cutoff: 151,
+      name: "Engineering College 197"
+    }, {
+      address: "46 College Road, Trichy, Tamil Nadu",
+      code: 199,
+      cutoff: 152,
+      name: "Engineering College 198"
+    }, {
+      address: "76 College Road, Madurai, Tamil Nadu",
+      code: 200,
+      cutoff: 145,
+      name: "Engineering College 199"
+    }, {
+      address: "89 College Road, Chennai, Tamil Nadu",
+      code: 201,
+      cutoff: 166,
+      name: "Engineering College 200"
+    }]
+    let studentCutoff = 0;
+
+    function calculateCutoffs() {
+      const maths = parseFloat(document.getElementById("maths").value);
+      const physics = parseFloat(document.getElementById("physics").value);
+      const chemistry = parseFloat(document.getElementById("chemistry").value);
+
+      if (isNaN(maths) || isNaN(physics) || isNaN(chemistry)) {
+        alert("Please enter all subject marks (0 to 100).");
+        return;
+      }
+
+      studentCutoff = (maths / 2) + (physics / 4) + (chemistry / 4);
+      document.getElementById("engResult").innerText = "🎓 Your Engineering Cutoff: " + studentCutoff.toFixed(2);
+
+      // const eligible = colleges.filter(c => studentCutoff >= c.cutoff);
+
+      let eligible = [];
+      for (let i = 0; i < colleges.length; i++) {
+        const c = colleges[i];
+        if (studentCutoff >= c.cutoff) {
+          eligible.push(c)
+        }
+
+      }
+
+      const select = document.getElementById("collegeSelect");
+      select.innerHTML = `<option value="">-- Select College --</option>`;
+
+      eligible.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.code;
+        opt.text = c.name + " " + c.code;
+        select.appendChild(opt);
+      });
+
+      document.getElementById("collegeSection").style.display = "block";
+    }
+
+    function collageEligibility() {
+      const collegeSelect = document.getElementById("collegeSelect");
+      const collegeResult = document.getElementById("collegeResult");
+      const selectedCollegeName = collegeSelect.value;
+      console.log(selectedCollegeName)
+
+      if (!selectedCollegeName) {
+        collegeResult.innerHTML = "⚠️ Please select a college.";
+        return;
+      }
+
+      const clg = colleges.find(c => c.code == selectedCollegeName);
+      console.log(clg)
+      if (!clg) {
+        collegeResult.innerHTML = "❌ College not found.";
+        return;
+      }
+
+      if (studentCutoff >= clg.cutoff) {
+        collegeResult.innerHTML = `
+          <strong>✅ Selected College:</strong> ${clg.name}<br>
+          <strong>📍 Address:</strong> ${clg.address}<br>
+          <strong>🎯 Required Cutoff:</strong> ${clg.cutoff}
+        `;
+      } else {
+        collegeResult.innerHTML = `
+          <strong>❌ You are not eligible for ${clg.name}</strong><br>
+          This college requires a cutoff of ${clg.cutoff}, but your cutoff is only ${studentCutoff.toFixed(2)}.
+        `;
+      }
+    }
+  </script>
+</body>
+
+</html>

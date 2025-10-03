@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Marks</title>
+</head>
+
+<body>
+  <h2>Student Marks Entry</h2>
+
+  <input type="text" id="name" placeholder="Student Name" />
+  <input type="text" id="tamil" placeholder="Tamil Mark" />
+  <input type="text" id="english" placeholder="English Mark" />
+  <input type="text" id="maths" placeholder="Maths Mark" />
+  <input type="text" id="social" placeholder="Social Mark" />
+  <input type="text" id="science" placeholder="Science Mark" />
+  <input type="number" id="total" placeholder="Total Mark (Optional)" />
+  <button onclick="submitMarks()"><b>Submit</b></button>
+
+  <h3>Student Marks Table</h3>
+  <table border="1" cellpadding="5" id="marksTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Tamil</th>
+        <th>English</th>
+        <th>Maths</th>
+        <th>Social</th>
+        <th>Science</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <script>
+   
+    if (!localStorage.getItem("markslist")) {
+      let markslist = [
+        { name: "jayapal1111111111111111", subTamil: 87, subEnglish: 80, subMaths: 82, subSocial: 85, subScience: 89, total: 423 },
+        { name: "bhavani", subTamil: 87, subEnglish: 80, subMaths: 82, subSocial: 85, subScience: 89, total: 423 },
+        { name: "kumar", subTamil: 87, subEnglish: 80, subMaths: 82, subSocial: 85, subScience: 89, total: 423 }
+      ];
+
+      
+      markslist = markslist.map(student => {
+        if (student.total === undefined) {
+          student.total =
+            student.subTamil +
+            student.subEnglish +
+            student.subMaths +
+            student.subSocial +
+            student.subScience;
+        }
+        return student;
+      });
+
+      localStorage.setItem("markslist", JSON.stringify(markslist));
+    }
+
+  
+    function submitMarks() {
+      let name = document.getElementById("name").value.trim();
+      let tamil = parseInt(document.getElementById("tamil").value);
+      let english = parseInt(document.getElementById("english").value);
+      let maths = parseInt(document.getElementById("maths").value);
+      let social = parseInt(document.getElementById("social").value);
+      let science = parseInt(document.getElementById("science").value);
+      let totalInput = document.getElementById("total").value;
+
+      
+      if (!name || isNaN(tamil) || isNaN(english) || isNaN(maths) || isNaN(social) || isNaN(science)) {
+        alert("Please fill all subject fields and name correctly.");
+        return;
+      }
+
+      
+      let total = totalInput ? parseInt(totalInput) : (tamil + english + maths + social + science);
+
+      let newStudent = {
+        name: name,
+        subTamil: tamil,
+        subEnglish: english,
+        subMaths: maths,
+        subSocial: social,
+        subScience: science,
+        total: total
+      };
+      
+
+      let stored = JSON.parse(localStorage.getItem("markslist")) || [];
+      stored.push(newStudent);
+      //updating local storage...>_<
+      localStorage.setItem("markslist", JSON.stringify(stored));
+     // refreshthe disply table
+      renderTable();
+
+      
+      document.getElementById("name").value = "";
+      document.getElementById("tamil").value = "";
+      document.getElementById("english").value = "";
+      document.getElementById("maths").value = "";
+      document.getElementById("social").value = "";
+      document.getElementById("science").value = "";
+      document.getElementById("total").value = "";
+    }
+   
+    function renderTable() {
+      //clear the existing table.
+      let tableBody = document.getElementById("tableBody");
+      tableBody.innerHTML = "";
+        //Load all students from storage
+      let data = JSON.parse(localStorage.getItem("markslist")) || [];
+
+      data.forEach(student => {
+        
+        //If total is missing (old data), it calculates it
+        if (!student.total) {
+          student.total =
+            student.subTamil +
+            student.subEnglish +
+            student.subMaths +
+            student.subSocial +
+            student.subScience;
+        }
+
+        let row = `<tr>
+          <td>${student.name}</td>
+          <td>${student.subTamil}</td>
+          <td>${student.subEnglish}</td>
+          <td>${student.subMaths}</td>
+          <td>${student.subSocial}</td>
+          <td>${student.subScience}</td>
+          <td>${student.total}</td>
+        </tr>`;
+        tableBody.innerHTML += row;
+        //Add the row to table
+      });
+    }
+
+    //Automatically loaded in data on page load >_<
+    renderTable();
+  </script>
+</body>
+</html>
