@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Secure Login Page</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #83a4d4, #b6fbff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .secure-page {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      width: 300px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-size: 14px;
+      text-align: center;
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Secure Login Page</h1>
+  <div class="secure-page">
+    <input type="text" id="username" placeholder="Username">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <input type="password" id="confirm-pass" placeholder="Confirm Password">
+    <button onclick="signin()">Sign In</button>
+    <div id="message" class="message"></div>
+  </div>
+
+  <script>
+    function signin() {
+      let username = document.getElementById("username").value;
+      let email = document.getElementById("email").value;
+      let password = document.getElementById("password").value;
+      let confirmPass = document.getElementById("confirm-pass").value;
+      let message = document.getElementById("message");
+
+      if (!username || !email || !password || !confirmPass) {
+        message.textContent = "❌ All fields are required.";
+        message.style.color = "red";
+        return;
+      }
+
+      if (password !== confirmPass) {
+        message.textContent = "❌ Passwords do not match.";
+        message.style.color = "red";
+        return;
+      }
+
+      if (password.length < 6) {
+        message.textContent = "❌ Password must be at least 6 characters.";
+        message.style.color = "red";
+        return;
+      }
+
+      if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+        message.textContent = "❌ Invalid email format.";
+        message.style.color = "red";
+        return;
+      }
+
+      message.style.color = "green";
+      message.textContent = "✅ Login Successful!";
+    }
+  </script>
+
+</body>
+</html>

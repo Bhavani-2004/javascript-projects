@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>jdfjfjjfj its is a string</h1>
+<script>
+    // let details={ name:"bhavani",
+    //     age:21
+
+    // }
+    // console.log(details["name"])
+
+    let details = [
+        { name: "Bhavani vishwanathan", age: 21,degree: "B.E", coures: "computer science" },
+        { name:"Veeramani",age:32, degree:"M.sc",coures:"computer science"},
+        { name: "Abinesh", age: 21,degree: "B.E", coures: "computer science" },
+        { name: "Archana", age: 21,degree: "B.E", coures: "computer science" },
+        { name: "Biswas Sathish", age: 21,degree: "B.E", coures: "computer science" },
+
+       
+
+    ]
+//     details=JSON.stringify(details)
+//  localStorage.setItem("details",details)
+
+let stored= localStorage.getItem("details")
+
+let parsed=JSON.parse(stored)
+console.log(stored)
+  
+    
+let names=document.querySelector("h1")
+names=JSON.stringify(names)
+
+    // console.log(details[0].name);
+    // console.log(details[0].age);
+
+</script>
+
+</body>
+
+</html>

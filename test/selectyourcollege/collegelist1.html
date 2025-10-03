@@ -1,0 +1,438 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Your College</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #message {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 18px;
+      color: green;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎓 Select Your College</h1>
+
+  <div class="form-group">
+    <label for="state">State</label>
+    <select id="state">
+      <option value="">...select your state...</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="district">District</label>
+    <select id="district">
+      <option value="">...select your district...</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="college">College</label>
+    <select id="college">
+      <option value="">...select your college...</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="type">Type</label>
+    <select id="type">
+      <option value="">...select your type...</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="university">University</label>
+    <select id="university">
+      <option value="">...select your university...</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <button id="submit">Submit</button>
+  </div>
+
+  <div id="message"></div>
+
+  <script>
+    const collegedetails = [
+      {
+        "s.no": 1,
+        "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+        "college_name": "Aazad College of Education (Id: C-39230)",
+        "college_type": "Affiliated College",
+        "state_name": "Andhra Pradesh",
+        "district-name": "Prakasam"
+      },
+      {
+        "s.no": 2,
+        "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+        "college_name": "Abhinav Institute of Management & Technology (Id: C-39450)",
+        "college_type": "Affiliated College",
+        "state_name": "Andhra Pradesh",
+        "district-name": "Prakasam"
+      },
+      {
+        "s.no": 3,
+        "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+        "college_name": "Abhyudaya Mahila Degree College (Id: C-32630)",
+        "college_type": "Affiliated College",
+        "state_name": "Andhra Pradesh",
+        "district-name": "Guntur"
+      },
+      {
+        "s.no": 4,
+        "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+        "college_name": "A.B.M. College (Id: C-32735)",
+        "college_type": "Affiliated College",
+        "state_name": "Andhra Pradesh",
+        "district-name": "Prakasam"
+      },
+      {
+        "s.no": 5,
+        "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+        "college_name": "A.B.R College of Education (Id: C-39231)",
+        "college_type": "Affiliated College",
+        "state_name": "Andhra Pradesh",
+        "district-name": "Prakasam"
+      }
+    ];
+
+    const stateSelect = document.getElementById("state");
+    const districtSelect = document.getElementById("district");
+    const collegeSelect = document.getElementById("college");
+    const typeSelect = document.getElementById("type");
+    const universitySelect = document.getElementById("university");
+    const messageDiv = document.getElementById("message");
+
+    // Step 1: Fill States
+    const states = [...new Set(collegedetails.map(c => c.state_name))];
+    states.forEach(state => {
+      const opt = document.createElement("option");
+      opt.value = state;
+      opt.textContent = state;
+      stateSelect.appendChild(opt);
+    });
+
+    // Step 2: When State Changes → Fill Districts
+    stateSelect.addEventListener("change", () => {
+      districtSelect.innerHTML = `<option value="">...select your district...</option>`;
+      collegeSelect.innerHTML = `<option value="">...select your college...</option>`;
+      typeSelect.innerHTML = `<option value="">...select your type...</option>`;
+      universitySelect.innerHTML = `<option value="">...select your university...</option>`;
+      messageDiv.textContent = "";
+
+      const selectedState = stateSelect.value;
+      const districts = [...new Set(collegedetails
+        .filter(c => c.state_name === selectedState)
+        .map(c => c["district-name"]))];
+
+      districts.forEach(d => {
+        const opt = document.createElement("option");
+        opt.value = d;
+        opt.textContent = d;
+        districtSelect.appendChild(opt);
+      });
+    });
+
+    // Step 3: When District Changes → Fill Colleges
+    districtSelect.addEventListener("change", () => {
+      collegeSelect.innerHTML = `<option value="">...select your college...</option>`;
+      typeSelect.innerHTML = `<option value="">...select your type...</option>`;
+      universitySelect.innerHTML = `<option value="">...select your university...</option>`;
+      messageDiv.textContent = "";
+
+      const selectedState = stateSelect.value;
+      const selectedDistrict = districtSelect.value;
+      const colleges = collegedetails
+        .filter(c => c.state_name === selectedState && c["district-name"] === selectedDistrict);
+
+      colleges.forEach(college => {
+        const opt = document.createElement("option");
+        opt.value = college.college_name;
+        opt.textContent = college.college_name;
+        collegeSelect.appendChild(opt);
+      });
+    });
+
+    // Step 4: When College Changes → Fill Type and University
+    collegeSelect.addEventListener("change", () => {
+      typeSelect.innerHTML = `<option value="">...select your type...</option>`;
+      universitySelect.innerHTML = `<option value="">...select your university...</option>`;
+      messageDiv.textContent = "";
+
+      const selectedCollege = collegeSelect.value;
+      const college = collegedetails.find(c => c.college_name === selectedCollege);
+
+      if (college) {
+        const opt1 = document.createElement("option");
+        opt1.value = college.college_type;
+        opt1.textContent = college.college_type;
+        typeSelect.appendChild(opt1);
+
+        const opt2 = document.createElement("option");
+        opt2.value = college.university;
+        opt2.textContent = college.university;
+        universitySelect.appendChild(opt2);
+      }
+    });
+
+    // Step 5: On Submit
+    document.getElementById("submit").addEventListener("click", () => {
+      const state = stateSelect.value;
+      const district = districtSelect.value;
+      const college = collegeSelect.value;
+      const type = typeSelect.value;
+      const university = universitySelect.value;
+
+      if (state && district && college && type && university) {
+        messageDiv.textContent = `🎉 Congratulations! You selected "${college}" in ${district}, ${state}. Type: ${type}, University: ${university}`;
+      } else {
+        messageDiv.textContent = "❌ Please select all options before submitting.";
+      }
+    });
+  </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Select Your College (Auto-Select Type & University)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin: 15px auto;
+            max-width: 400px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #218838;
+        }
+
+        #message {
+            text-align: center;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🎓 Select Your College (Auto-Select Enabled)</h1>
+    <div class="form-group"><label>State</label><select id="state">
+            <option value="">--Select State--</option>
+        </select></div>
+    <div class="form-group"><label>District</label><select id="district">
+            <option value="">--Select District--</option>
+        </select></div>
+    <div class="form-group"><label>College</label><select id="college">
+            <option value="">--Select College--</option>
+        </select></div>
+    <div class="form-group"><label>Type</label><select id="type">
+            <option value="">--Select Type--</option>
+        </select></div>
+    <div class="form-group"><label>University</label><select id="university">
+            <option value="">--Select University--</option>
+        </select></div>
+    <div class="form-group"><button id="submit">Submit</button></div>
+    <div id="message"></div>
+
+    <script>
+        const collegedetails = [
+            // Maharashtra
+            { state_name: "Maharashtra", "district-name": "Mumbai", college_name: "St. Xavier's College", college_type: "Autonomous", university: "University of Mumbai" },
+            { state_name: "Maharashtra", "district-name": "Mumbai", college_name: "NMIMS Mumbai", college_type: "Deemed", university: "NMIMS University" },
+            { state_name: "Maharashtra", "district-name": "Pune", college_name: "Fergusson College", college_type: "Autonomous", university: "SP Pune University" },
+            { state_name: "Maharashtra", "district-name": "Pune", college_name: "MIT-WPU", college_type: "Private", university: "MIT World Peace University" },
+
+            // Karnataka
+            { state_name: "Karnataka", "district-name": "Bengaluru", college_name: "Christ University", college_type: "Deemed", university: "Christ University" },
+            { state_name: "Karnataka", "district-name": "Bengaluru", college_name: "RVCE", college_type: "Private", university: "VTU" },
+            { state_name: "Karnataka", "district-name": "Mysuru", college_name: "JSS Science College", college_type: "Private", university: "University of Mysore" },
+            { state_name: "Karnataka", "district-name": "Mysuru", college_name: "Vidyavardhaka College", college_type: "Private", university: "University of Mysore" },
+
+            // Tamil Nadu
+            { state_name: "Tamil Nadu", "district-name": "Chennai", college_name: "Loyola College", college_type: "Autonomous", university: "University of Madras" },
+            { state_name: "Tamil Nadu", "district-name": "Chennai", college_name: "Anna University CEG", college_type: "Government", university: "Anna University" },
+            { state_name: "Tamil Nadu", "district-name": "Coimbatore", college_name: "PSG College of Technology", college_type: "Autonomous", university: "Anna University" },
+            { state_name: "Tamil Nadu", "district-name": "Coimbatore", college_name: "Avinashilingam University", college_type: "Deemed", university: "Avinashilingam University" },
+
+            // Uttar Pradesh
+            { state_name: "Uttar Pradesh", "district-name": "Lucknow", college_name: "University of Lucknow", college_type: "Government", university: "University of Lucknow" },
+            { state_name: "Uttar Pradesh", "district-name": "Lucknow", college_name: "Integral University", college_type: "Private", university: "Integral University" },
+            { state_name: "Uttar Pradesh", "district-name": "Kanpur", college_name: "HBTU", college_type: "Government", university: "HBTU Kanpur" },
+            { state_name: "Uttar Pradesh", "district-name": "Kanpur", college_name: "CSJMU", college_type: "State", university: "CSJMU Kanpur" },
+
+            // Delhi
+            { state_name: "Delhi", "district-name": "New Delhi", college_name: "St. Stephen's College", college_type: "Autonomous", university: "University of Delhi" },
+            { state_name: "Delhi", "district-name": "New Delhi", college_name: "SRCC", college_type: "Autonomous", university: "University of Delhi" },
+            { state_name: "Delhi", "district-name": "South Delhi", college_name: "Jamia Millia Islamia", college_type: "Central", university: "Jamia Millia Islamia" },
+            { state_name: "Delhi", "district-name": "South Delhi", college_name: "IIT Delhi", college_type: "Institute of National Importance", university: "IIT Delhi" },
+
+            // Gujarat
+            { state_name: "Gujarat", "district-name": "Ahmedabad", college_name: "Gujarat University", college_type: "State", university: "Gujarat University" },
+            { state_name: "Gujarat", "district-name": "Ahmedabad", college_name: "LD College of Engineering", college_type: "Government", university: "Gujarat Technological University" },
+            { state_name: "Gujarat", "district-name": "Surat", college_name: "SVNIT Surat", college_type: "Institute of National Importance", university: "SVNIT" },
+            { state_name: "Gujarat", "district-name": "Surat", college_name: "Veer Narmad South Gujarat University", college_type: "State", university: "VNSGU" },
+
+            // Rajasthan
+            { state_name: "Rajasthan", "district-name": "Jaipur", college_name: "University of Rajasthan", college_type: "State", university: "University of Rajasthan" },
+            { state_name: "Rajasthan", "district-name": "Jaipur", college_name: "MNIT Jaipur", college_type: "Institute of National Importance", university: "MNIT Jaipur" },
+            { state_name: "Rajasthan", "district-name": "Jodhpur", college_name: "JNVU Jodhpur", college_type: "State", university: "JNVU" },
+            { state_name: "Rajasthan", "district-name": "Jodhpur", college_name: "AIIMS Jodhpur", college_type: "Institute of National Importance", university: "AIIMS Jodhpur" },
+
+            // Kerala
+            { state_name: "Kerala", "district-name": "Thiruvananthapuram", college_name: "University College", college_type: "State", university: "University of Kerala" },
+            { state_name: "Kerala", "district-name": "Thiruvananthapuram", college_name: "CET Trivandrum", college_type: "Government", university: "APJ Abdul Kalam Technological University" },
+            { state_name: "Kerala", "district-name": "Kochi", college_name: "CUSAT", college_type: "State", university: "CUSAT" },
+            { state_name: "Kerala", "district-name": "Kochi", college_name: "SCMS Cochin School of Business", college_type: "Private", university: "MG University" },
+
+            // West Bengal
+            { state_name: "West Bengal", "district-name": "Kolkata", college_name: "Presidency University", college_type: "State", university: "Presidency University" },
+            { state_name: "West Bengal", "district-name": "Kolkata", college_name: "Jadavpur University", college_type: "State", university: "Jadavpur University" },
+            { state_name: "West Bengal", "district-name": "Darjeeling", college_name: "North Bengal University", college_type: "State", university: "North Bengal University" },
+            { state_name: "West Bengal", "district-name": "Darjeeling", college_name: "Darjeeling Government College", college_type: "Government", university: "North Bengal University" }
+        ];
+
+        const $ = id => document.getElementById(id);
+        const stateSelect = $("state"), districtSelect = $("district");
+        const collegeSelect = $("college"), typeSelect = $("type");
+        const universitySelect = $("university"), messageDiv = $("message");
+
+        // Fill States
+        new Set(collegedetails.map(c => c.state_name))
+        .forEach(s => {
+            stateSelect.add(new Option(s, s));
+        });
+
+        // Fill Districts on State Change
+        stateSelect.onchange = () => {
+            districtSelect.length = collegeSelect.length = typeSelect.length = universitySelect.length = 1;
+            messageDiv.textContent = "";
+            const districts = new Set(collegedetails
+                .filter(c => c.state_name === stateSelect.value)
+                .map(c => c["district-name"]));
+            districts.forEach(d => districtSelect.add(new Option(d, d)));
+        };
+
+        // Fill Colleges on District Change
+        districtSelect.onchange = () => {
+            collegeSelect.length = typeSelect.length = universitySelect.length = 1;
+            messageDiv.textContent = "";
+            collegedetails
+                .filter(c => c.state_name === stateSelect.value && c["district-name"] === districtSelect.value)
+                .forEach(c => collegeSelect.add(new Option(c.college_name, c.college_name)));
+        };
+
+        // Auto-Select Type & University on College Change
+        collegeSelect.onchange = () => {
+            typeSelect.length = universitySelect.length = 1;
+            messageDiv.textContent = "";
+            const sel = collegedetails.find(c => c.college_name === collegeSelect.value);
+            if (sel) {
+                const typeOpt = new Option(sel.college_type, sel.college_type);
+                typeSelect.add(typeOpt);
+                typeSelect.selectedIndex = 1;  // Auto-select type
+
+                const univOpt = new Option(sel.university, sel.university);
+                universitySelect.add(univOpt);
+                universitySelect.selectedIndex = 1;  // Auto-select university
+            }
+        };
+
+        // Submit Button Click
+        $("submit").onclick = () => {
+            if (stateSelect.value && districtSelect.value && collegeSelect.value && typeSelect.value && universitySelect.value) {
+                messageDiv.textContent = `🎉 Selected: ${collegeSelect.value}, ${districtSelect.value}, ${stateSelect.value} — Type: ${typeSelect.value}, University: ${universitySelect.value}`;
+            } else {
+                messageDiv.textContent = "❌ Please select all fields.";
+            }
+        };
+    </script>
+</body>
+
+</html>

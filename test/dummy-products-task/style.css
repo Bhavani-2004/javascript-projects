@@ -1,0 +1,125 @@
+  
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      background: #ffe6f0; /* light pink background */
+      color: #222;
+      padding: 20px;
+    }
+
+    /* 🔥 Full-Width Header */
+    .site-header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+
+      padding: 30px 20px;
+      background: linear-gradient(90deg, #ad1457, #d81b60); /* dark pink gradient */
+      color: #fff;
+      border-radius: 0;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      margin-bottom: 20px;
+    }
+
+    .site-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .site-header .tagline {
+      font-size: 16px;
+      font-weight: 400;
+      opacity: 0.9;
+    }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    /* Product Card */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Image */
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    /* Card Body */
+    .card-body {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #ad1457; /* dark pink for product titles */
+    }
+
+    .card-description {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.4;
+      height: 40px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Card Footer */
+    .card-footer {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+    }
+
+    .card-footer span:first-child {
+      color: #d81b60; /* bright pink price */
+      font-size: 16px;
+    }
+
+    .card-footer span:last-child {
+      background: #f8bbd0; /* light pink badge background */
+      color: #880e4f;
+      padding: 3px 8px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+
+    /* Links */
+    a {
+      text-decoration: none;
+      color: inherit;
+    }

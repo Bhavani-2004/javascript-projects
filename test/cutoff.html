@@ -1,0 +1,265 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>sri ranganathar</title>
+</head>
+
+<body>
+  <h2>college Eligibility checker </h2>
+  <label for="Maths:"> Maths:</label>
+  <input type="number" id="maths" placeholder="out of 100"><br>
+  <label for="Maths:"> Physics:</label>
+  <input type="number" id="physics" placeholder="out of 100"><br>
+  <label for="Maths:"> Chemistry:</label>
+  <input type="number" id="chemistry" placeholder="out of 100"><br><br>
+  <button onclick="calculateCutoffs()">checker eligible</button>
+  <h3 id="engResult"></h3>
+
+
+
+
+  <div id="collegeSection" style="display: none;">
+    <h4>Select colleges</h4>
+    <select id="collegeSelect">
+      <option value="">...selectOption....</option>
+    </select>
+    <button onclick="collageEligibility()">search</button>
+    <div id="collegeResult" style="margin-top: 10px;"></div>
+  </div>
+
+
+  <script>
+    const colleges = [
+      { name: "SNS College", address: "Coimbatore", cutoff: 85 },
+      { name: "Vel Tech", address: "Chennai", cutoff: 90 },
+      { name: "Karpagam College", address: "Coimbatore", cutoff: 88 },
+      { name: "Anna University", address: "Chennai", cutoff: 195 },
+    ];
+
+    let studentCutoff = 0;
+
+    function calculateCutoffs() {
+      const maths = parseFloat(document.getElementById("maths").value);
+      const physics = parseFloat(document.getElementById("physics").value);
+      const chemistry = parseFloat(document.getElementById("chemistry").value);
+
+      if (
+        isNaN(maths) ||
+        isNaN(physics) || isNaN(chemistry)
+      ) {
+        alert("Please enter all subject marks (0 to 100).");
+        return;
+      }
+       studentCutoff = (maths / 2) + (physics / 4) + (chemistry / 4);
+      document.getElementById("engResult").innerText = "🎓 Your Engineering Cutoff: " + studentCutoff.toFixed(2);
+
+
+
+
+      const elligible = colleges.filter(c => studentCutoff >= c.cutoff);
+      const select = document.getElementById("collegeSelect")
+      select.innerHTML = `<option value="">-- Select College --</option>`;
+
+      elligible.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.name
+        opt.text = c.name
+        select.appendChild(opt);
+      });
+      document.getElementById("collegeSection").style.display = "block";
+
+    }
+
+    function collageEligibility() {
+      const collegeSelect = document.getElementById("collegeSelect");
+      const collegeResult = document.getElementById("collegeResult");
+
+       const selectedCollegeName = collegeSelect.value;
+
+      if (!selectedCollegeName) {
+       collegeResult.innerHTML = "Please select a college.";
+
+      }
+
+      const clg = colleges.find(c => c.name ===selectedCollegeName);
+
+      if(!clg){
+      collegeResult.innerHTML=" college not found .";
+      return;
+      }
+
+      if (studentCutoff >= clg.cutoff) {
+         collegeResult.innerHTML = `
+          <strong>✅ Selected College:</strong> ${clg.name}<br>
+          <strong>📍 Address:</strong> ${clg.address}<br>
+          <strong>🎯 Required Cutoff:</strong> ${clg.cutoff}
+        `;
+        }
+
+      else {
+          collegeResult.innerHTML = `
+          <strong>❌ You are not eligible for ${clg.name}</strong><br>
+          This college requires a cutoff of ${clg.cutoff}, but your cutoff is only ${studentCutoff.toFixed(2)}.
+        `;
+       
+
+      }
+
+
+    }
+
+
+
+
+  </script>
+</body>
+
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>sri ranganathar</title>
+</head>
+
+<body onload="loadFromLocalStorage()">
+  <h2>College Eligibility Checker</h2>
+
+  <label>Maths:</label>
+  <input type="number" id="maths" placeholder="out of 100"><br>
+
+  <label>Physics:</label>
+  <input type="number" id="physics" placeholder="out of 100"><br>
+
+  <label>Chemistry:</label>
+  <input type="number" id="chemistry" placeholder="out of 100"><br><br>
+
+  <button onclick="calculateCutoffs()">Check Eligibility</button>
+  <h3 id="engResult"></h3>
+
+  <div id="collegeSection" style="display: none;">
+    <h4>Select colleges</h4>
+    <select id="collegeSelect">
+      <option value="">...selectOption....</option>
+    </select>
+    <button onclick="collageEligibility()">Search</button>
+    <div id="collegeResult" style="margin-top: 10px;"></div>
+  </div>
+
+  <script>
+    const colleges = [
+      { name: "SNS College", address: "Coimbatore", cutoff: 85 },
+      { name: "Vel Tech", address: "Chennai", cutoff: 90 },
+      { name: "Karpagam College", address: "Coimbatore", cutoff: 88 },
+      { name: "Anna University", address: "Chennai", cutoff: 195 },
+    ];
+
+    let studentCutoff = 0;
+
+    function calculateCutoffs() {
+      const maths = parseFloat(document.getElementById("maths").value);
+      const physics = parseFloat(document.getElementById("physics").value);
+      const chemistry = parseFloat(document.getElementById("chemistry").value);
+
+      if (isNaN(maths) || isNaN(physics) || isNaN(chemistry)) {
+        alert("Please enter all subject marks (0 to 100).");
+        return;
+      }
+
+      studentCutoff = (maths / 2) + (physics / 4) + (chemistry / 4);
+      document.getElementById("engResult").innerText = "🎓 Your Engineering Cutoff: " + studentCutoff.toFixed(2);
+
+      // ✅ Save marks and cutoff to localStorage
+      localStorage.setItem("marks", JSON.stringify({ maths, physics, chemistry }));
+      localStorage.setItem("cutoff", studentCutoff.toFixed(2));
+
+      const eligible = colleges.filter(c => studentCutoff >= c.cutoff);
+      const select = document.getElementById("collegeSelect");
+      select.innerHTML = `<option value="">-- Select College --</option>`;
+
+      eligible.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.name;
+        opt.text = c.name;
+        select.appendChild(opt);
+      });
+
+      document.getElementById("collegeSection").style.display = "block";
+    }
+
+    function collageEligibility() {
+      const collegeSelect = document.getElementById("collegeSelect");
+      const collegeResult = document.getElementById("collegeResult");
+      const selectedCollegeName = collegeSelect.value;
+
+      if (!selectedCollegeName) {
+        collegeResult.innerHTML = "Please select a college.";
+        return;
+      }
+
+      const clg = colleges.find(c => c.name === selectedCollegeName);
+      if (!clg) {
+        collegeResult.innerHTML = "College not found.";
+        return;
+      }
+
+      // ✅ Save selected college
+      localStorage.setItem("selectedCollege", selectedCollegeName);
+
+      if (studentCutoff >= clg.cutoff) {
+        collegeResult.innerHTML = `
+          <strong>✅ Selected College:</strong> ${clg.name}<br>
+          <strong>📍 Address:</strong> ${clg.address}<br>
+          <strong>🎯 Required Cutoff:</strong> ${clg.cutoff}
+        `;
+      } else {
+        collegeResult.innerHTML = `
+          <strong>❌ You are not eligible for ${clg.name}</strong><br>
+          This college requires a cutoff of ${clg.cutoff}, but your cutoff is only ${studentCutoff.toFixed(2)}.
+        `;
+      }
+    }
+
+    function loadFromLocalStorage() {
+      const marks = JSON.parse(localStorage.getItem("marks"));
+      const savedCutoff = localStorage.getItem("cutoff");
+      const selectedCollege = localStorage.getItem("selectedCollege");
+
+      if (marks) {
+        document.getElementById("maths").value = marks.maths;
+        document.getElementById("physics").value = marks.physics;
+        document.getElementById("chemistry").value = marks.chemistry;
+
+        // Recalculate
+        studentCutoff = (marks.maths / 2) + (marks.physics / 4) + (marks.chemistry / 4);
+        document.getElementById("engResult").innerText = "🎓 Your Engineering Cutoff: " + savedCutoff;
+
+        // Repopulate dropdown
+        const eligible = colleges.filter(c => studentCutoff >= c.cutoff);
+        const select = document.getElementById("collegeSelect");
+        select.innerHTML = `<option value="">-- Select College --</option>`;
+        eligible.forEach(c => {
+          const opt = document.createElement("option");
+          opt.value = c.name;
+          opt.text = c.name;
+          select.appendChild(opt);
+        });
+
+        if (eligible.length > 0) {
+          document.getElementById("collegeSection").style.display = "block";
+        }
+
+        // Re-display previous result
+        if (selectedCollege) {
+          document.getElementById("collegeSelect").value = selectedCollege;
+          collageEligibility(); // Auto check eligibility
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>

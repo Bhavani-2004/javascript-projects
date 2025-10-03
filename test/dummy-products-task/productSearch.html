@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>🛍️ Product Search with Category & Sort (API)</title>
+   
+  <style>
+    /* Global Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f8bbd0, #f3e5f5, #fff9c4); /* pink + purple + yellow gradient */
+      min-height: 100vh;
+      padding: 20px;
+      color: #333;
+    }
+
+   /* 🔥 Header */
+h1 {
+  text-align: center;
+  margin: 0 auto 35px auto;
+  font-size: 40px;            /* bigger font */
+  font-weight: 900;
+  font-family: "Poppins", sans-serif; /* modern stylish font */
+  
+  color: #fff;
+  padding: 45px 20px;
+  
+  background: linear-gradient(rgb(248, 30, 248) ); /* dark pink → pink → light pink */
+  
+  border-radius: 18px;
+  max-width: 1100px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  letter-spacing: 1px;
+}
+
+
+    /* Controls */
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+
+    input, select {
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 2px solid #ab47bc;
+      border-radius: 8px;
+      background: #fff;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #ec407a; /* pink highlight */
+      box-shadow: 0 0 8px rgba(236, 64, 122, 0.5);
+    }
+
+    /* Products Grid */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    /* Product Card */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      padding: 12px;
+      text-align: center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .card h3 {
+      margin: 12px 0 6px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #6a1b9a; /* purple titles */
+    }
+
+    .card p {
+      margin: 2px 0;
+      font-size: 14px;
+    }
+
+    .card p:first-of-type {
+      color: #ec407a; /* pink price */
+      font-weight: bold;
+    }
+
+    .card p:last-of-type {
+      background: #fdd835; /* yellow badge */
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-top: 4px;
+      color: #5d4037;
+    }
+
+    /* Buttons */
+    .btn {
+      margin-top: 10px;
+      padding: 8px 14px;
+      background: linear-gradient(90deg, #ab47bc, #ec407a, #fdd835);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
+  </style>
+
+</head>
+<body>
+
+<h1>🔎 Beauty Products more  </h1>
+
+<div class="controls">
+  <input type="text" id="searchInput" placeholder="Search products...">
+  
+  <select id="categorySelect">
+    <option value="">-- All Categories --</option>
+    <option value="smartphones">Smartphones</option>
+    <option value="laptops">Laptops</option>
+    <option value="fragrances">Fragrances</option>
+    <option value="groceries">Groceries</option>
+    <option value="home-decoration">Home Decoration</option>
+  </select>
+
+  <select id="sortSelect">
+    <option value="">-- Sort By --</option>
+    <option value="title-asc">Title (A-Z)</option>
+    <option value="price-asc">Price (Low to High)</option>
+    <option value="rating-desc">Rating (High to Low)</option>
+  </select>
+</div>
+
+<div class="products" id="productContainer"></div>
+
+<script>
+  const searchInput = document.getElementById('searchInput');
+  const categorySelect = document.getElementById('categorySelect');
+  const sortSelect = document.getElementById('sortSelect');
+  const productContainer = document.getElementById('productContainer');
+
+  function fetchProducts() {
+    const searchTerm = searchInput.value.trim();
+    const category = categorySelect.value;
+    const sortValue = sortSelect.value;
+
+    let url = '';
+    let isBaseProductsAPI = false;
+
+    if (searchTerm !== '') {
+      url = `https://dummyjson.com/products/search?q=${encodeURIComponent(searchTerm)}`;
+    } else if (category !== '') {
+      url = `https://dummyjson.com/products/category/${category}`;
+    } else {
+      url = `https://dummyjson.com/products`;
+      isBaseProductsAPI = true;
+    }
+
+    if (isBaseProductsAPI && sortValue !== '') {
+      const [sortBy, order] = sortValue.split("-");
+      url += url.includes("?") ? `&sortBy=${sortBy}&order=${order}` : `?sortBy=${sortBy}&order=${order}`;
+    }
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const products = data.products || [];
+        renderProducts(products);
+      })
+      .catch(err => {
+        console.error("API Error:", err);
+        productContainer.innerHTML = "<p>Failed to load products.</p>";
+      });
+  }
+
+  function renderProducts(products) {
+    productContainer.innerHTML = '';
+    if (products.length === 0) {
+      productContainer.innerHTML = '<p>No products found.</p>';
+      return;
+    }
+
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${p.images?.[0] || ''}" alt="${p.title}">
+        <h3>${p.title}</h3>
+        <p>₹${p.price}</p>
+        <p>⭐ ${p.rating}</p>
+        <button class="btn" onclick="viewDetails(${p.id})">View Details</button>
+      `;
+      productContainer.appendChild(card);
+    });
+  }
+
+  function viewDetails(id) {
+    window.location.href = `productDetail.html?id=${id}`;
+  }
+
+  
+  searchInput.addEventListener("input", fetchProducts);
+  categorySelect.addEventListener("change", fetchProducts);
+  sortSelect.addEventListener("change", fetchProducts);
+
+ 
+  fetchProducts();
+</script>
+
+</body>
+</html>

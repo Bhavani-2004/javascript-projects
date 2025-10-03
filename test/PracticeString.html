@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+// return of(true/false)
+//1) stringStratsWith()
+ let a="bhavani viswanathan"
+ let findsF=a.startsWith("b")
+ console.log(findsF)
+//2) stringEndsWith()
+let b="Hello World"
+let findsL=b.endsWith("d")
+console.log(findsL)
+
+//3)stringIncludes()
+let c="bhavani viswanathan"
+let findb=c.includes("b")
+console.log(findb)
+
+
+//numbers(return of indexing)
+//1) charAtCode()
+let d ="Bhavani"
+let charCode=d.charCodeAt("Bhavani")
+console.log(charCode)
+//2) indexof()
+let e="bhavani viswanathan"
+let findsI=e.indexOf("bhavani")
+console.log(findsI)
+//3) lastindex()
+let fb="bhavani viswanathan"
+let findsLi=fb.lastIndexOf(" viswanathan")
+console.log(findsLi)
+// //4) stringSearch()
+// let es="bhavani"
+// let findsS=es.search([/D/S])
+// console.log(findsS)
+
+
+//return of (String)
+ let con="veera Mani"
+ let conc=con.charAt(6)
+ console.log(conc)
+
+ let cha="bhavani "
+ let char="Viswanathan"
+ console.log(cha.concat(char))
+
+let pad="bhavani bow"
+let padP=pad.padEnd(25,"bow")
+console.log(padP)
+
+let pads="bhavani bowpulla"
+let padsl= pads.padStart( 40,"bow")
+console.log(padsl)
+
+let repi="puppy bow"
+let pup=repi.repeat(15,"puppy")
+console.log(pup)
+
+let repl="cutie bow bow"
+let repla=repl.replace("c","*")
+console.log(repla)
+
+let all="bow boow boww"
+let alls=all.replaceAll("o","&")
+console.log(alls)
+
+let sli=("kutty Maaa Bowww")
+let slic=sli.slice(2)
+console.log(slic)
+
+let spil="bhavani Viswa"
+let spill=spil.split(" ")
+console.log(spill)
+
+
+let low="Bhavani Viswanathan"
+let lowe =low.toLowerCase("Bhavani Viswanathan")
+console.log(lowe)
+
+let bow="Bhavani Viswnathan"
+let bowe =low.toUpperCase("Bhavani Viswanathan")
+console.log(bowe)
+
+let cow="    bhavani bow      "
+let bowb=cow.trim()
+console.log(bowb)
+
+let cowa="  hello world  "
+let cowc=cowa.trimStart()
+console.log(cowc)
+
+let cowd="  hello world  "
+let cowe=cowd.trimEnd()
+console.log(cowe)
+
+const str = "Hello World";
+let sstr=str.substring(1,2)
+console.log(sstr)
+
+const stri = "Hello World"
+ let st=stri.substr(1, 2)
+console.log(st)
+
+const stra = "Hello World"
+let sta=str.match(/[A-Z]/);
+console.log(sta)
+
+const strb = "Hello World"
+let stb=str.matchAll(/[A-Z]/g)
+console.log(stb)
+    </script>
+</body>
+</html>

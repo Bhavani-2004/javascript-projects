@@ -1,0 +1,4970 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Select Your College (Auto-Select College)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 30px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .form-group {
+      margin: 15px auto;
+      max-width: 400px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    select,
+    button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background: #28a745;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #218838;
+    }
+
+    #message {
+      text-align: center;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1> Select Your College (Auto-Select College)</h1>
+
+  <div class="form-group"><label>State</label><select id="state"><option value="">--Select State--</option></select></div>
+  <div class="form-group"><label>District</label><select id="district"><option value="">--Select District--</option></select></div>
+  <div class="form-group"><label>University</label><select id="university"><option value="">--Select University--</option></select></div>
+  <div class="form-group"><label>Type</label><select id="type"><option value="">--Select Type--</option></select></div>
+  <div class="form-group"><label>College</label><select id="college"><option value="">--Select College--</option></select></div>
+
+  <div class="form-group"><button onclick="submitSelection()">Submit</button></div>
+  <div id="message"></div>
+
+  <script>
+    const collegedetails =
+    [
+  {
+    s_no: 1,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Aazad College of Education (Id: C-39230)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 2,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Abhinav Institute of Management & Technology (Id: C-39450)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 3,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Abhyudaya Mahila Degree College (Id: C-32630)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 4,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.B.M. College (Id: C-32735)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 5,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.B.R College of Education (Id: C-39231)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 6,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.C.College (Day) (Id: C-32762)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 7,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.C.College of Law (Id: C-32792)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 8,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.C.Evening College (Id: C-32720)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 9,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Acharya N.G.Ranga College of Education (Id: C-32793)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 10,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Adarsa College of Education (Id: C-32801)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 11,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Adarsa Degree College for Women (Id: C-32733)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 12,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.G.K.M.College (Id: C-32664)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 13,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.L.College of Education (Id: C-32711)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 14,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Ali College of Education (Id: C-39243)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 15,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "AL Momin College of Education (Id: C-39261)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 16,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Alpha College of Education (Id: C-39238)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 17,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Alpha College of Education, Kanigiri (Id: C-44489)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 18,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Alpha Degree College (Id: C-32797)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 19,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Aman Showkath B.Ed College (Id: C-39227)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 20,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.M.G.College of Education (Id: C-32649)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 21,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.M.G.Degree College for Women (Id: C-32769)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 22,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.M Reddy College of Education (Id: C-37211)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 23,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.M. Reddy Memorial College of Pharmacy (Id: C-39491)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 24,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Amrutha College of Education (Id: C-39232)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 25,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Amrutha Degree College (Id: C-44105)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 26,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Andhra Kesari College of Education (Id: C-39275)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 27,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Andhra Kesari Vidya Kendram Degree College (Id: C-32631)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 28,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Andhra Muslim College (Id: C-32727)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 29,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Andhra Muslim College of Education (Id: C-36923)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 30,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Anitha Venkateswara College of Eduation (Id: C-39241)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 31,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Annabattuni Satyanarayana Degree College (Id: C-32656)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 32,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Anniebesant College of Education (Id: C-32740)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 33,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "ANU PG Campus Ongole (Id: C-32629)",
+    "college_type": "PG Center / Off-Campus Center",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 34,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.P.Residential Degree College (Id: C-32778)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 35,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Asha College of Education (Id: C-39244)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 36,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.S.M & A.W. D Women's Degree College (Id: C-39265)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 37,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.S.N Pharmacy College, Tenali (Id: C-39489)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 38,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "B.A & K.R College of Education (Id: C-39269)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 39,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "B.A & K.R Degree College (Id: C-32771)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 40,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Balaji Degree College (Id: C-32669)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 41,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Bapatla College of Arts & Science (Id: C-32779)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 42,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Bapatla Engineering College (Id: C-42660)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 43,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Bapatla Womens Engineering College (Id: C-39453)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 44,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Bapuji College of Education (Id: C-39240)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 45,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "B.B.H Degree College (Id: C-32756)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 46,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "B.G Degree College, Sattenapalli (Id: C-40608)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 47,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Bharathi Degree College (Id: C-32667)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 48,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Bhashyam College of Education (Id: C-39234)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 49,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "B.H.H Degree College for Women (Id: C-32803)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 50,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "B.M.Degree College, P.Dornala (Id: C-39300)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 51,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "BMRM Jhansi B.Ed College (Id: C-39237)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 52,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "B.R College of Education (Id: C-37221)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 53,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "B.S.S.B College (Id: C-32652)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 54,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "B.V.S.P.M Degree College (Id: C-32663)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 55,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Career Degree College (Id: C-32782)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 56,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Chaitanya Bharathi Degree College, Chirala (Id: C-42659)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 57,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Chaitanya College of Education (Id: C-32763)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 58,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Chakradhar Degree College, Macherla (Id: C-39308)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 59,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Chalapathi Degree College, Lam (Id: C-42706)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 60,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Chalapathi Institute of Engineering & Technology, Lam (Id: C-39475)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 61,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Chalapathi Institute of Pharmaceutical Sciences, Lam (Id: C-39486)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 62,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Chebrolu Hanumaiah College of Pharmaceutical Sciences (Id: C-39452)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 63,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Chegireddy Linga Reddy Instt of Management (Id: C-39466)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 64,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Chirala College of PG Studies, Chirala (Id: C-39457)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 65,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Chiristian Women's College (Id: C-32703)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 66,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Christu Jayanthi Jubilee College (P.G.) (Id: C-32819)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 67,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "C.I.L.For Rural Management (Id: C-42663)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 68,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "C.R. College (Id: C-32796)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 69,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "C.S.R. Sarma College (Id: C-32702)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 70,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "D.C.R.M Degree College (Id: C-32662)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 71,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "D.C.R.M P.G College, MBA (Id: C-32655)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 72,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Devathi Venkata Subbaiah Degree College (Id: C-32710)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 73,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Devathi Venkata Subbiah College of Education (Id: C-37223)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 74,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Don Bosco College (P.G.) (Id: C-32804)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 75,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Dr. B.R.Ambedkar Centenary Degree College (Id: C-32741)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 76,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Dr.Homi Jahangir Baba Degree College (Id: C-32813)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 77,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Dr. Jayapradamba Degree College (Id: C-32776)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 78,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Dr. K.R.R.M. Degree College (Id: C-32636)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 79,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Dr. K.S.P.R College of Education (Id: C-39242)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 80,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Dr.K.V.K. Sanskrit College (Id: C-32692)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 81,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "D.R.N.S.C.V.S. College (Id: C-32790)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 82,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Dr. Samuel George College of Pharmaceutical Science (Id: C-32811)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 83,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Dr. Zakir Hussain College of Education (Id: C-36922)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 84,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "D.S.Govt. Degree College for Women, Ongole (Id: C-32817)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 85,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Erigineni Tirupati Naidu & Lakshmamma Degree College (Id: C-32786)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 86,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Fatima College of Education (Id: C-32654)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 87,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "G.C.K.V.N. Degree College (Id: C-32628)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 88,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "G.C & Y P N Degree College (Id: C-32698)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 89,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Geetham Degree College (Id: C-32777)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 90,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Geethanjali Degree College, Darsi (Id: C-41015)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 91,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Geethika B.Ed College (Id: C-39236)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 92,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Goutham College of Education (Id: C-39310)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 93,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Government Degree College, Cumbum (Id: C-39309)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 94,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Government Degree College, Yerragondapalem (Id: C-39295)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 95,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Govt. Degree College, Chebrolu (Id: C-32624)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 96,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Govt. Degree College for Women, Guntur (Id: C-32670)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 97,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Govt. Degree College, Kanigiri (Id: C-32748)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 98,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "G.R.K Degree College, Maddipadu (Id: C-39306)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 99,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "G.R.R. & T.P.R. Degree College (Id: C-42707)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 100,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "G.S.R. Degree College (Id: C-41014)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 101,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "G.V.& A.D.S.L. College of Education (Id: C-32678)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 102,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "G.V.R & S College of Education (Id: C-39228)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 103,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "G V R & S Degree College for Women (Id: C-32690)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 104,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "G.V.R.S Institute for Professional Studies (Id: C-32718)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 105,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "G.V.S.M. GOVT. Degree College (Id: C-32724)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 106,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Hazarath Ameeruddin College of Education (Id: C-39272)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 107,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Hindu College, Guntur (Id: C-32675)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 108,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Hindu College of Education (Id: C-37107)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 109,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Hindu College of Management, Guntur (Id: C-39487)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 110,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Hindu College of Pharmacy (Id: C-32798)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 111,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "H.M.K.S. & M.G.S. Memorial College of Education (Id: C-32809)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 112,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Ideal & S.K.C.M Degree College (Id: C-32830)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 113,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Indira Priyadarsni Law College (Id: C-32736)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 114,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "J.C. College of Law (Id: C-32815)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 115,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "J.K.C. College (Id: C-32701)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 116,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "J.M.J. College for Women (Id: C-32812)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 117,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "J.R.R Navodaya Degree College (Id: C-39268)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 118,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Kalikamba College of Education (Id: C-32722)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 119,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Kalyani MCA College, Eethamukkala (Id: C-42704)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 120,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Kamala College of Education (Id: C-39274)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 121,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Kamala Institute of Management Studies (Id: C-44107)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 122,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Kasturibai College of Education (Id: C-37209)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 123,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "K Chandrakala College (P.G.) (Id: C-32666)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 124,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "K.C Reddy Institute of Pharmaceutical Sciences (Id: C-39485)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 125,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "KC Reddy PG College, Janamguntapalem (Id: C-42658)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 126,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "K.L.N. Sanskrit College (Id: C-32794)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 127,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "K.L.R. Degree College (Id: C-32764)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 128,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Konijeti Rosaiah Siva Lakshmi College (Id: C-41017)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 129,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Krishnaveni Degree College (Id: C-32694)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 130,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Krishnaveni Degree College, Vinukonda (Id: C-42745)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 131,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "K R K Govt. Degree College (Id: C-32818)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 132,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "K.S.R & K.R.K College of Education (Id: C-39235)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 133,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "K.S.R.N. Degree College, Govada (Id: C-39316)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 134,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "K.V.R., K.VR. & M.K.R College (Id: C-39270)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 135,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Lakshmi Narsimha College of Education (Id: C-37212)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 136,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Magunta Subba Rami Reddy Degree College (Id: C-32688)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 137,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Mahatma Gandhi College (Id: C-32829)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 138,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Malineni Lakshmaiah B.Ed College (Id: C-39262)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 139,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "M.A.M College of Education (Id: C-39245)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 140,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "M.A.M College of Pharmacy, Narsaraopet (Id: C-39470)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 141,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Matrusri Oriental College (Id: C-32821)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 142,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "M.G College of Education (Id: C-37222)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 143,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Mittapalli Lakshmaiah & Sons Degree College, Piduguralla (Id: C-41008)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 144,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "M.L. College of MBA (Id: C-32751)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 145,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "M.L. College of Pharmacy (Id: C-32658)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 146,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "M.M.R Degree College, Macherla (Id: C-39305)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 147,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Modern Degree College (Id: C-32674)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 148,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Morning Star College (Id: C-32633)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 149,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Mother Theresa Womens Degree College, Karampudi (Id: C-42779)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 150,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "M.S.R. Degree College, Bapatla (Id: C-39315)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 151,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "M.V.G.R. Degree College (Id: C-32719)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 152,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "M.V.R Degree College, Karlapalem (Id: C-39264)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 153,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "M.V.R.S. Viveka Degree College (Id: C-32721)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 154,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Nagarjuna College of Education (Id: C-32641)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 155,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Nagarjuna Institute of Management Studies, Chekurapadu (Id: C-39467)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 156,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Nalanda College of Education (Id: C-37207)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 157,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "National Minority Degree College (Id: C-32683)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 158,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Navya Chaitanya College of Education (Id: C-32758)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 159,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "N.B.T & N V C College (Id: C-32746)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 160,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "New Era College of Education (Id: C-37106)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 161,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Nirmala College of Pharmacy, Mangalagiri (Id: C-39481)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 162,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "N.N.R. & C.L. Degree College (Id: C-32743)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 163,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "N.N.S. Vidya College of P.G. Studies (Id: C-32761)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 164,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "N.N.S Vidya Degree College (Id: C-42657)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 165,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "N.R.K & K.S.R Gupta College of Pharmacy (Id: C-39469)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 166,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "N.R.K. & K.S.R. Gupta Degree College (Id: C-32747)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 167,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "N.T.R Memorial Degree College (Id: C-32645)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 168,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Omega College of Education (Id: C-32682)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 169,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Palnadu College of Education, Narayanapuram (Id: C-39458)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 170,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "P.B.N. College (Id: C-32757)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 171,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Pedanandipadu College of Arts and Sciences (Id: C-32781)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 172,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "P.N.C.A Degree College (Id: C-32620)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 173,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "P.N.C & K.R. College (Id: C-32816)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 174,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Prabhala Lakshminarayana Memorial Degree College (Id: C-32673)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 175,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Prabhala PG College for Women, Nagarjuna Nagar (Id: C-39451)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 176,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Pratap College of Education (Id: C-41026)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 177,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Prathiba Degree College (Id: C-32775)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 178,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Pratibha Degree College, Pedanandipadu (Id: C-41021)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 179,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Priya Darisini Degree College (Id: C-32665)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 180,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Priyadarsini Institute of Pharmaceutical Science (Id: C-39474)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 181,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Priyanka College of Education (Id: C-32713)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 182,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "P.S.B. College of Education (Id: C-39266)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 183,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Qis College of Education (Id: C-39276)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 184,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Radha Degree College, Vinukonda (Id: C-39304)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 185,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Raghava Degree College - Ongole (Id: C-32642)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 186,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Rahul Institute of Pharmaceutical Sciences & Research (Id: C-41031)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 187,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Rahul Subramanyam Memorial Instt of Management Studies, Chirala (Id: C-41030)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 188,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Ravindra Bharathi College of Education (Id: C-32745)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 189,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Repalle Christian College (Id: C-32806)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 190,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Repalle Christian College of Education (Id: C-32716)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 191,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "R.V.R. & J.C. College of Engineering (Id: C-32672)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 192,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "R.V.R.R. College of Education (Id: C-32725)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 193,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "R.V.V.N. College (Id: C-32687)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 194,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.A.B.R. Govt. Degree College (Id: C-32765)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 195,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sadhana Degree College (Id: C-32755)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 196,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sadineni Chowdaraiah College of Arts & Science (Id: C-32739)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 197,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sai Chaitanya Degree College Giddalur (Id: C-39303)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 198,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sarada College of Pharmaceutical Sciences (Id: C-39479)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 199,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sarada Degree College, Medarametla (Id: C-44488)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 200,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Saraswathi College of Arts & Science, Dachepalli (Id: C-41013)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 201,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.B.G. Degree College, Sattenapalli (Id: C-40606)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 202,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.B.M.S. Degree College (Id: C-32646)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 203,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.B.Swamy Sanskrit College (Id: C-32728)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 204,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.B.V.S.R College of Education, Cheemakurthi (Id: C-42742)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 205,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Seven Hills College of Education (Id: C-37208)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 206,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.G.H.R. & M.C.M.R.College (Id: C-32730)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 207,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.G.K Govt. Degree College, Vinukonda (Id: C-42245)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 208,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.G.K. Oriental College (Id: C-32697)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 209,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.G.T. & J.V.B.College (Id: C-32635)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 210,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.G.V. Oriental College (Id: C-32783)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 211,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Shams-Ul_Uloom College of Education, Markapur (Id: C-39301)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 212,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Shams-Ul-Uloom College of Education, Podili (Id: C-39477)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 213,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Shivani Degree College (Id: C-36921)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 214,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Siddhartha Institute of Pharmaceutical Sciences, Jonnalagadda (Id: C-39454)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 215,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "SIMS College of Education (Id: C-37210)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 216,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "SIMS College of Life Sciences, Guntur (Id: C-41033)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 217,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "SIMS College of Pharmacy (Id: C-32788)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 218,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.K.B.R. Govt. College (Id: C-32691)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 219,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.K.R.B.R. College (Id: C-32738)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 220,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.K.S.V. Degree College for Women (Id: C-32661)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 221,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.L.V. College of Education (Id: C-42244)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 222,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.M.P.A. Degree College (Id: C-32814)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 223,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "SMS & SMCMR College of Education (Id: C-37217)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 224,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Smt. Koonapareddy Prameela Rani Degree College, Parchoor (Id: C-39312)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 225,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Smt. Sanagala Prameela Degree College (Id: C-32685)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 226,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S M Y College of Education (Id: C-32660)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 227,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.N.B.T. Degree College for Women (Id: C-32737)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 228,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.N.B.T.M. College of Education (Id: C-32622)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 229,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Chaitanya College of Education (Id: C-39263)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 230,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri C.V. Raman College of Computer Science (Id: C-39463)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 231,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Gayatri Vidya Parishad Degree College (Id: C-32715)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 232,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Gowtham College of Education, Darsi (Id: C-39447)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 233,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Gowtham Degree College, Kandulapuram (Id: C-41009)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 234,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Gowthami Degree College, Darsi (Id: C-41011)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 235,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Harsha's Womens Degree College, Cumbum (Id: C-44486)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 236,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Harshini Degree College, Martur (Id: C-41024)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 237,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Harshini Degree College, Ongole (Id: C-41023)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 238,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Jeevana Jyothi Degree College, Giddalur (Id: C-41010)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 239,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sriji Degree College (Id: C-32774)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 240,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Kakatiya Degree College, Predakurapadu (Id: C-42776)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 241,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Kandula Obula Reddy Degree College (Id: C-32785)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 242,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Karthikeya Degree College - Guntur (Id: C-39494)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 243,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Mahaveer Memorial Jain Degree College (Id: C-32826)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 244,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Majeti Guravaiah Degree College (Id: C-32709)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 245,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Nagarjuna Degree College (Id: C-32640)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 246,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Potti Sriramulu Degree College (Id: C-32647)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 247,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Prasannanjaneya Degree College (Id: C-41032)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 248,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Prathidba Degree College (Id: C-32773)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 249,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Pratibha Degree College, Ongole (Id: C-39311)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 250,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Raja Rajeswari College of Education, Giddalur (Id: C-39472)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 251,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Rama Krishna Degree College (Id: C-32668)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 252,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Sadhana Degree College, Markapur (Id: C-39296)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 253,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Sai Degree College (Id: C-44035)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 254,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Sai Degree College, Repalle (Id: C-43770)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 255,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Sarada Niketanam Oriental College (Id: C-32648)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 256,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Sidhartha Degree College, Bestavaripeta (Id: C-42774)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 257,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Tatiparthi Venkata Reddy Memorial College of Education (Id: C-39476)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 258,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Vasavi Kanyaka Parameswari Degree College (Id: C-41002)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 259,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Venkateswara Balakuteer College of Education (Id: C-42662)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 260,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Venkateswara College of Education (Id: C-37218)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 261,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Venkateswara College of Education, Darsi (Id: C-39492)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 262,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Venkateswara Degree College (Id: C-32686)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 263,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Venkateswara Degree College, Guntur (Id: C-44824)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 264,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Venkateswara Degree College, Nakirekallu (Id: C-41007)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 265,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Venkateswara & Sri Satyadev Degree College (Id: C-44108)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 266,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sri Vivekananda Degree College, Podili (Id: C-39302)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 267,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.S. Arts & Science College (Id: C-32627)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 268,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.S. & N. College (Id: C-32759)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 269,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.S.N. Degree College (Id: C-32696)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 270,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.S.N Degree College, Podili (Id: C-42705)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 271,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "St. Anns College for Women (Id: C-39493)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 272,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "St. Ignatious Degree College (Id: C-42777)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 273,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "St. John College of Education (Id: C-32726)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 274,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "St. Joseph's College of Education for Women (Id: C-32752)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 275,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "St Mark NTR College of Education (Id: C-37206)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 276,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "St Mary's B.Ed College, Podili (Id: C-39464)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 277,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "St. Paul's College of Education (Id: C-32659)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 278,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "St. Peter & G. Krishna College of Education (Id: C-32706)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 279,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "St. Theressa Degree College - Hotel Management, Tenali (Id: C-41006)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 280,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "St. Xavier Institute of Pharmacy (Id: C-39456)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 281,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.V. Arts & Science College (Id: C-32824)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 282,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.V.B.S Degree College, Komarole (Id: C-41003)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 283,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.V.K.P. Arts, Science & Commerce College (Id: C-42778)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 284,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.V.K.P. College (Id: C-32795)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 285,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.V.K.P. Degree College (Id: C-32805)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 286,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.V.K.P P.G College, Cumbum (Id: C-44534)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 287,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "S.V.R.M. College (Id: C-32810)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 288,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sweekaar College of Special Education (M.R), Guntur (Id: C-41211)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 289,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Sweekaar Degree College, Guntur (Id: C-41212)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 290,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Tarlapadu College of Education (Id: C-32699)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 291,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "TCMT College (Id: C-32791)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 292,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Thotakura RamaKotaiah College of Education (Id: C-39239)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 293,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Tiyyagura Sitarami Reddy Degree College, Piduguralla (Id: C-41005)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 294,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "T.J.P.S. College (Id: C-32708)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 295,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "T.R.R. Govt. Degree College (Id: C-32822)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 296,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "T.R.R. & S. Degree College (Id: C-32744)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 297,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "University COllege of Arts, Commerce and Law (Id: C-32637)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 298,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "University College of Engineering & Technology (Id: C-32695)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 299,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "University College of Pharmaceutical Sciences (Id: C-32766)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 300,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "University College of Physical Education and Sports Sciences (Id: C-32653)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 301,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "University Collge of Architecture & Planning (Id: C-32723)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 302,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "University Collge of Sciences (Id: C-32742)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 303,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vagdevi College of Pharmacy, Gurazala (Id: C-39478)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 304,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vagdevi Degree College, Rentachintala (Id: C-41001)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 305,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vasavi Degree College for Women (Id: C-32799)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 306,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vasavi MBA & MCA College, Kandulapuram (Id: C-39473)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 307,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vellanki College of Education (Id: C-37213)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 308,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Venigalla Jayasri Ram College (Id: C-32621)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 309,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Venkateswara College of Eduation, Besthavaripeta (Id: C-39465)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 310,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Victoria College of Pharmacy, Nallapadu (Id: C-39488)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 311,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vidya Kendran Degree College, Sattenapalli (Id: C-40607)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 312,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vignan Degree College, Chemakurthi (Id: C-42744)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 313,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vignan Degree College, Guntur (Id: C-32750)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 314,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vijaya Jyothi Degree College, Mangalagiri (Id: C-42246)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 315,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vijayateja Degree College (Id: C-41022)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 316,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vikas Degree College, Macherla (Id: C-44106)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 317,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vinukonda B.Ed. College (Id: C-32638)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 318,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vision Institute of Sciences & Technology (Id: C-32684)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 319,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Viveka Arts & Science Degree College (Id: C-32651)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 320,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Viveka College of Education, Vaddesangam (Id: C-44487)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 321,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vivekananda College of Education, Kandukur (Id: C-39455)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 322,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "VJ&BL Degree College, Mangalagiri (Id: C-42708)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 323,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "V.R.S. & Y.R.N. College (Id: C-32639)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 324,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "V.S.R. & A.M. Degree College (Id: C-32820)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 325,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "V.S.R. & N.V.R. College (Id: C-32705)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 326,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "V.T.J.M. & I.V.T.R. Degree College (Id: C-32623)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 327,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "V.V. & M. College (Id: C-32753)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 328,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vyshnavi College of Education (Id: C-37216)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 329,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Vyshnavi Degree College, Thripurantakam (Id: C-41018)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 330,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Y.A. Govt. College for Women (Id: C-32734)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 331,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Yaswanth College of Education,Bestavaripeta (Id: C-39482)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Prakasam"
+  },
+  {
+    s_no: 332,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "Agricultultural College, Bapatla (Id: C-26378)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 333,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "Agricultural College, Aswaraopet (Id: C-26380)",
+    "college_type": "Constituent / University College",
+    "state_name": "Telangana",
+    "district_name": "Khammam"
+  },
+  {
+    s_no: 334,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "Agricultural College, Jagtial (Id: C-26376)",
+    "college_type": "Constituent / University College",
+    "state_name": "Telangana",
+    "district_name": "Karimnagar"
+  },
+  {
+    s_no: 335,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "Agricultural College, Mahanandi (Id: C-26377)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Kurnool"
+  },
+  {
+    s_no: 336,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "Agricultural College, Naira (Id: C-26375)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Srikakulam"
+  },
+  {
+    s_no: 337,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "Agricultural College, Rajahmundry (Id: C-26369)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 338,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "Collage of Agriculture, Rajendranagar (Id: C-26372)",
+    "college_type": "Constituent / University College",
+    "state_name": "Telangana",
+    "district_name": "Rangareddy"
+  },
+  {
+    s_no: 339,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "College of Agricultural Engineering, Bapatla (Id: C-26373)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 340,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "College of Agricultural Engineering, Madakasira (Id: C-26381)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Anantapur"
+  },
+  {
+    s_no: 341,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "College of Food Science and Technology, Bapatla (Id: C-26371)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Guntur"
+  },
+  {
+    s_no: 342,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "College of Food Science and Technology, Pulivendula (Id: C-26379)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Y.S.R."
+  },
+  {
+    s_no: 343,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "College of Home Science, Hyderabad (Id: C-26370)",
+    "college_type": "Constituent / University College",
+    "state_name": "Telangana",
+    "district_name": "Hyderabad"
+  },
+  {
+    s_no: 344,
+    "university": "Acharya NG Ranga Agricultural University, Hyderabad (Id: U-0004)",
+    "college_name": "S.V. Agricultural College, Tirupathi (Id: C-26374)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Chittoor"
+  },
+  {
+    s_no: 345,
+    "university": "ADESH UNIVERSITY (Id: U-0736)",
+    "college_name": "Adesh Institute of Dental Sciences & Research, Baranala Road, Bathinda (Id: C-29246)",
+    "college_type": "Constituent / University College",
+    "state_name": "Punjab",
+    "district_name": "Bathinda"
+  },
+  {
+    s_no: 346,
+    "university": "ADESH UNIVERSITY (Id: U-0736)",
+    "college_name": "Adesh Institute of Medical Sciences & Research, Barnala Road (Id: C-29187)",
+    "college_type": "Constituent / University College",
+    "state_name": "Punjab",
+    "district_name": "Bathinda"
+  },
+  {
+    s_no: 347,
+    "university": "ADESH UNIVERSITY (Id: U-0736)",
+    "college_name": "Adesh Institute of Pharmacy & Biomedical Sciences, Bathinda (Id: C-10496)",
+    "college_type": "Constituent / University College",
+    "state_name": "Punjab",
+    "district_name": "Bathinda"
+  },
+  {
+    s_no: 348,
+    "university": "ADESH UNIVERSITY (Id: U-0736)",
+    "college_name": "College of Nursing, Adesh Institute of Medical Sciences & Research, Bathinda (Id: C-29249)",
+    "college_type": "Constituent / University College",
+    "state_name": "Punjab",
+    "district_name": "Bathinda"
+  },
+  {
+    s_no: 349,
+    "university": "ADESH UNIVERSITY (Id: U-0736)",
+    "college_name": "College of Physiotherapy, Adesh Institute of Medical Sciences & Research, Bathinda (Id: C-29162)",
+    "college_type": "Constituent / University College",
+    "state_name": "Punjab",
+    "district_name": "Bathinda"
+  },
+  {
+    s_no: 350,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "ABHYUDAYA DEGREE COLLEGE (Id: C-24297)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 351,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Adarsa Degree College (Id: C-24193)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 352,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Aditya Degree College, Cinema Road, Tatipaka (Id: C-26816)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 353,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Aditya Degree College for Women, Rajahmundry (Id: C-26823)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 354,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Aditya Degree College for Women, Santinagar, Kakinada (Id: C-26819)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 355,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "ADITYA DEGREE COLLEGE, PALAKOL (Id: C-26825)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 356,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Aditya Degree College, Santinagar, Kakinada (Id: C-26817)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 357,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Aditya Degree College, Thadithota, Rajahmundry, EG Dist (Id: C-26818)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 358,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "A.K.R.G. College (Id: C-24355)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 359,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "A.K.R.G. DEGREE COLLEGE (Id: C-24096)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 360,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "AKULA GOPAIAH DEGREE COLLEGE (Id: C-24309)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 361,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Al Ameer Institute of Management & Tech (Id: C-24299)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 362,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Amrutha Arts & Science Degree College (Id: C-24109)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 363,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Andhra Kesari Degree College (Id: C-23998)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 364,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Andhra Womens Sanskrit College (Id: C-23885)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 365,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "ANNAPURNA DEGREE COLLEGE (Id: C-24120)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 366,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "A.S.Govt.Degree College for Women, Kakinada (Id: C-24046)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 367,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "A.S.N.Degree College for Women (Id: C-23938)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 368,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "A.S.N.M. GOVT. DEGREE COLLEGE FOR MEN (Id: C-24463)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 369,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "A.S.R. DEGREE COLLEGE (Id: C-24128)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 370,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Avanthi Degree College, E.G Dist. (Id: C-39223)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 371,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "A.V.R. and V.P.R. Degree College (Id: C-23828)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 372,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "B.G.B.S. COLLEGE FOR WOMEN (Id: C-24369)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 373,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Bh.S.R. & V.L.M. DEGREE COLLEGE (Id: C-24248)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 374,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "BRILLIANTS DEGREE COLLEGE (Id: C-23948)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 375,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "B.R.R. & G.K.R. CHAMBERS DEGREE COLLEGE (Id: C-24249)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 376,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "B.S.R. Degree College (Id: C-24186)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 377,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "C.B.R.Degree College (Id: C-24041)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 378,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Chaitanya College of Education (Id: C-23869)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "Visakhapatnam"
+  },
+  {
+    s_no: 379,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Chaitanya Degree College (Id: C-24017)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 380,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Chaitanya Degree College, Sivakodu (Id: C-24442)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 381,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "CHALLA SATYANARAYANA SARMA DEGREE COLLEGE (Id: C-24222)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 382,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Ch.S.D. St. THERESAS (A) COLLEGE FOR WOMEN (Id: C-23939)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 383,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Ch. S.D. St. Theresas College for Women (Id: C-24352)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 384,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "CH.V.P.M.R. GOVT. DEGREE COLLEGE (Id: C-24068)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 385,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "C.N.R. Degree College (Id: C-23967)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 386,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "C.S.T.S. GOVT. KALASALA (Id: C-24166)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 387,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Deepthi Degree College, Mamidikuduru (Id: C-33027)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 388,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "D.L.R.Degree College (Id: C-24122)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 389,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "D.N.R. (A) COLLEGE (Id: C-23835)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 390,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "D.N.R. GOVT. DEGREE COLLEGE FOR WOMEN (Id: C-24474)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 391,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Dr.B.R.Ambedkar Degree college (Id: C-24407)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 392,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Dr. B.V. RAJU INSTITUTE OF COMPUTER EDUCATION (Id: C-24227)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 393,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Dr. C.S.N. DEGREE COLLEGE (Id: C-23946)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 394,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Dr. C S N Degree & PG College (Id: C-24224)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 395,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Dr. C.S.N. Institute of Pharmacy (Id: C-24320)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 396,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "D.R.G. DEGREE COLLEGE FOR WOMEN (Id: C-23954)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 397,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "D.R.G.Govt.Degree College (Id: C-24138)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 398,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Dr.K.V.R.D & S.G.J.V.S.Degree College (Id: C-35412)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 399,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Dr. Maddigopalakrishna Reddy Degree College (Id: C-24242)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 400,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Dr.R.B.R.V.R.N.Edl.Academy Mahila Degree College (Id: C-24168)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 401,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Dr. SARVEPALLI RADHAKRISHNA DEGREE COLLEGE (Id: C-23834)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 402,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "FLAIZ ADVENTIST COLLEGE (Id: C-24040)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 403,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Gayatri Degree College, Kadiam, E.G.Dist. (Id: C-39220)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 404,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "G.B.R.Degree College (Id: C-24489)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 405,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "G.K.R.V. Degree & P.G. College (Id: C-23912)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 406,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "G.K.R.V.M.Degree College (Id: C-24228)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 407,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "G.M.R. MEMORIAL VIDYARDHI COLLEGE (Id: C-24388)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 408,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt. College, Rajahmundry (Id: C-24364)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 409,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "GOVT. DEGREE COLLEGE BUTTAIGUDEM (Id: C-24079)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 410,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "GOVT. DEGREE COLLEGE CHINTALAPUDI (Id: C-23970)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 411,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt. Degree College, Eluru (Id: C-24471)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 412,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt.Degree College, Jaggampeta (Id: C-24239)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 413,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt. Degree College, Kommavarapukota (Id: C-24065)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 414,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt.Degree College, Mandapeta (Id: C-24009)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 415,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt.Degree College, Pithapuram (Id: C-24058)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 416,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt.Degree College, Rajahmundry (Id: C-24448)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 417,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt.Degree College, Rampachodavaram (Id: C-24089)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 418,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt.Degree College, Ravulapalem (Id: C-23829)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 419,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt.Degree College, Razole (Id: C-24207)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 420,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt.Degree College, Seethanagaram (Id: C-23813)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 421,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt.Degree College, Tuni (Id: C-24102)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 422,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Govt. Degree College, Yelleswaram (Id: C-23965)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 423,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Grace Degree College (Id: C-23875)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 424,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Harward College of Science & Technology (Id: C-24462)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 425,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Harward Degree College (Id: C-23944)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 426,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "HIS Degree College (Id: C-24225)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 427,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Ideal College of Arts & Sciences (Id: C-24145)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 428,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "J.C.Degree College (Id: C-23931)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 429,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "K.A. & H.L. DEGREE COLLEGE (Id: C-23964)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 430,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "K.G.R.L. COLLEGE (Id: C-24460)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 431,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "KGRL College (PG Courses) (Id: C-24250)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 432,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "K.P.R. & J.L. SIDDHARTHA DEGREE COLLEGE (Id: C-24287)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 433,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "K.S.N.R. DEGREE COLLEGE (Id: C-24257)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 434,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "LAMP Degree College (Id: C-24481)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 435,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "LITTLE FLOWER DEGREE COLLEGE (Id: C-24485)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 436,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Little Rose Degree College (Id: C-24270)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 437,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Ln.G.V.Rao Modern Degree College (Id: C-24398)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 438,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "LUTHERN DEGREE COLLEGE (Id: C-24495)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 439,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "MAA COMMERCE & SCIENCE DEGREE COLLEGE (Id: C-24432)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 440,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Mahatma Gandhi Degree College (Id: C-23932)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 441,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "MATTREDDY DEGREE COLLEGE (Id: C-24111)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 442,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Minarva Degree College (Id: C-23849)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 443,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Miriam College of Education (Id: C-23867)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 444,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Miriam Degree College (Id: C-24361)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 445,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Mohan Degree College (Id: C-24094)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 446,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Montessori Degree College (Id: C-23846)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 447,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Mother College, (PG Courses) (Id: C-24379)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 448,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Mother Degree College (Id: C-23995)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 449,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "M.S.N.Degree College (Id: C-23926)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 450,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "M.S.S.Degree College (Id: C-24062)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 451,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "M.V.N.J.S & R.V.R Degree College (Id: C-23886)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 452,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "N.G.R.Degree College (Id: C-24313)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 453,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "NOVA DEGREE COLLEGE (Id: C-23984)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 454,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "N.S.Z. COLLEGE OF MUSIC AND DANCE (Id: C-24059)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 455,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Padmasri Dr. B.V. Raju Institute of Computer Education (Id: C-24172)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 456,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "P.E.S.Degree College (Id: C-24424)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 457,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Pragathi Degree College, Kakinada, E.G.Dist. (Id: C-27197)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 458,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Pragyna Degree college (Id: C-24280)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 459,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "PRAKASAM DEGREE COLLEGE (Id: C-24362)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 460,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Pratibha Degree College, Kuyyeru(v), Kajukuru(M), E.G.Dist. (Id: C-39219)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 461,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "P.R.Govt.Degree College, Kakinada (Id: C-24020)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 462,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "PRIYADARSHINI DEGREE COLLEGE (Id: C-24219)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 463,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "P.S.N. Murthy Degree College (Id: C-24028)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 464,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "P.S.N.Murthy Degree College (Id: C-24331)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 465,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "P.V.E.S. DEGREE COLLEGE FOR WOMEN (Id: C-24021)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 466,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "P.V.R.Trust Degree College (Id: C-24330)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 467,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Rajamahendri Degree College for Women (Id: C-23930)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 468,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Rajiv Gandhi Degree College (Id: C-23906)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 469,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "RAJIV INSTITUTE OF TECHNOLOGY AND MANAGEMENT STUDY (Id: C-23972)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 470,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Rankireddy Pattabhiramaiah Degree College (Id: C-24223)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 471,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "R.R.D.S. GOVT. DEGREE COLLEGE (Id: C-24023)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 472,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Samhitha Degree College (Id: C-24347)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 473,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.A.S. GOVT. DEGREE COLLEGE (Id: C-24456)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 474,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SASI DEGREE COLLEGE (Id: C-23882)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 475,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sathabdhi Degree College (Id: C-24396)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 476,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.C.I.M.Govt.Degree College (Id: C-24205)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 477,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.D.V.R.R.Degree College (Id: C-24013)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 478,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Siddardha Degree College, Tuni, East Godavari (Id: C-27189)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 479,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Siddhardha Degree College, Katrenikona, E.G.Dist. (Id: C-27188)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 480,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Siddhardha Degree College, P.Gannavaram, E.G.Dist (Id: C-34228)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 481,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SIDDHARTH DEGREE COLLEGE,West Godavari (Id: C-26838)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 482,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SIR C.R.R. COLLEGE (Id: C-23921)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 483,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sir CRR College for Women (Id: C-24319)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 484,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SIR C.R.R. COLLEGE FOR WOMEN (Id: C-23986)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 485,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.K.B.R.Degree College (Id: C-23956)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 486,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.K.R.S. ORIENTAL COLLEGE (Id: C-23940)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 487,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.K.S.D. MAHILA KALASALA (Id: C-23857)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 488,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.K.V.R.R. DEGREE COLLEGE (Id: C-23961)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 489,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.K.V.T.Degree College (Id: C-24194)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 490,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.M.B.T.A.V. & S.N. DEGREE COLLEGE (Id: C-24146)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 491,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt.Alluru Varahalamma Memorial Degree College (Id: C-23978)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 492,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt.Basava Mangayamma Memorial Degree College (Id: C-24118)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 493,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt.B.S.R.Degree College (Id: C-23908)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 494,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt.B.S.R.Degree College, Gokavaram (Id: C-24185)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 495,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt.D.A.Degree College (Id: C-24169)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 496,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt. GOTTUMUKKALA SARASWATHI DEGREE COLLEGE (Id: C-23991)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 497,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt.J.B.Degree College (Id: C-24384)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 498,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt.K.R.College for Women (Id: C-24254)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 499,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt.R.N.Memorial Degree College for Women (Id: C-24453)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 500,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt.Sakunthala Devi Degree College (Id: C-24478)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 501,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt. SKR Degree & PG College for (W) (Id: C-24354)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 502,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Smt. Sumathi Memorial Degree College (Id: C-24403)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 503,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.N.M. Degree College (Id: C-24157)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 504,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SPACES Degree College (Id: C-24076)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 505,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.P.V.S.Degree College (Id: C-24348)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 506,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SREE MARUTHI DEGREE COLLEGE (Id: C-24315)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 507,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sree Siddhartha Degree College (Id: C-24328)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 508,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sree Vidyaa Degree College (Id: C-23895)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 509,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI ABN & PRR COLLEGE OF SCIENCE (Id: C-24387)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 510,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI CHALAPATI DEGREE COLLEGE (Id: C-24192)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 511,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Deepthi Mahila Degree College (Id: C-24327)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 512,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI GOWTHAMI DEGREE COLELGE, NARSAPUR, W.G.DIST (Id: C-39496)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 513,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Gowthami Degree College (Id: C-23826)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 514,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Gowthami Degree College, Jinnuru(V) (Id: C-24480)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 515,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Kadali Narayana Murthy Degree College (Id: C-24231)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 516,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI KAKATIYA DEGREE COLLEGE (Id: C-24285)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 517,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI KARIBANDI SUBBARAO MEMORIAL DEGREE COLLEGE (Id: C-24084)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 518,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Kolla Veera Swamy Degree College (Id: C-24496)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 519,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI KRISHNA VENI DEGREE COLLEGE (Id: C-23962)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 520,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri N.S.N.Raju Degree College (Id: C-23892)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 521,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Padmavathi Mahila Degree College (Id: C-23942)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 522,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Raghavendra Degree College (Id: C-24326)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 523,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI RAGHAVENDRA DEGREE COLLEGE (Id: C-24050)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 524,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Raja Rajeswari Degre College (Id: C-23843)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 525,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI RAMA DEGREE COLLEGE (Id: C-24447)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 526,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI RAMA DEGREE COLLEGE, TANUKU (Id: C-24277)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 527,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI RAMA KRISHNA DEGREE COLLEGE (Id: C-24245)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 528,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Ravi Degree College (Id: C-24429)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 529,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI SAI DEGREE COLLEGE, LINGAPALEM (Id: C-24430)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 530,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI SAI DEGREE COLLEGE, TANUKU, W.G.DISTRICT (Id: C-34999)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 531,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Sai Madhavi Degree College (Id: C-23919)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 532,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Sai Madhavi Degree College, Anaparthi (Id: C-24444)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 533,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Sai Santiniketan Degree College (Id: C-23914)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 534,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Shiridi Sai Degree College, Mummidivaram, E.G.Dist. (Id: C-39248)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 535,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI SRINIVASA DEGREE COLLEGE (Id: C-23832)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 536,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI SURYA DEGREE COLLEGE (Id: C-23981)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 537,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Varupala Surya Rao Degree College (Id: C-24199)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 538,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI VELAGAPUDI RAMAKRISHNA DEGREE COLLEGE (Id: C-23841)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 539,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Venkatasai Degree College (Id: C-23943)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 540,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Venkateswara College of Arts & Science (Id: C-24391)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 541,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Sri Venkateswara Degree Collge (Id: C-24492)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 542,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI VIDYA DEGREE COLLEGE (Id: C-24412)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 543,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SRI Y.N. COLLEGE (Id: C-24135)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 544,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.R.V.B.S.J.B.Maharani College (Id: C-24159)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 545,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "St. MARYS NIRMALA HRUDAYA MAHILA COLLEGE (Id: C-24188)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 546,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "St.Pauls Degree College (Id: C-24417)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 547,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "St. Vincent De-Paul College (Id: C-24393)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 548,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "St. VINCENT DE PAUL DEGREE COLLEGE (Id: C-24198)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 549,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SURYA DEGREE COLLEGE (Id: C-24244)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 550,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SURYA DEGREE COLLEGE FOR WOMEN (Id: C-24486)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 551,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Suryaraya Degree College (Id: C-24178)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 552,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.V. Degree Colelge, Bhimadole(V&M), W.G.Dist. (Id: C-39218)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 553,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.V.D. GOVT. DEGREE COLLEGE FOR WOMEN (Id: C-23976)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 554,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SVD&SGL College of Management & Technology (Formerly Samhitha College of Management & Technology (Id: C-24200)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 555,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.V.J.V. SANSKRIT COLLEGE (Id: C-24483)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 556,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SVKP & Dr. K.S. Raju Arts &Science College (Id: C-23836)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 557,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.V.K.P. & Dr. K.S. RAJU ARTS & SCIENCE COLLEGE (Id: C-23888)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 558,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.V.R.K. DEGREE COLLEGE (Id: C-24464)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 559,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.V.R.K. GOVT. DEGREE COLLEGE FOR MEN (Id: C-24372)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 560,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "SVS Degree College (Id: C-23883)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 561,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.V.S.S. ARTS & SCIENCE COLLEGE (Id: C-24061)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 562,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "S.V.V.S.S.Devasthanam Degree College (Id: C-24115)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 563,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "The Amalapuram Degree College (Id: C-24263)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 564,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "TRIVENI DEGREE COLLEGE (Id: C-24034)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 565,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "University College of Arts, Commerce and Science (Id: C-7238)",
+    "college_type": "Constituent / University College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 566,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Velangi Degree College (Id: C-24305)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 567,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Vignan Institute of Science & Arts (Id: C-24173)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 568,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "VIJNANA NILAYAM DEGREE COLLEGE (Id: C-23979)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 569,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "VIKAS DEGREE COLLEGE (Id: C-24131)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 570,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Vinuthna Degree College (Id: C-23904)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 571,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "V.K.V.Govt.Degree College (Id: C-24147)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 572,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "V.S.K. DEGREE COLLEGE (Id: C-24290)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 573,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "V.S.Lakshmi Degree College for Women (Id: C-24011)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 574,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "VSL Degree College (Id: C-23960)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 575,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "V.S.M.College (Id: C-24390)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 576,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "V.S.R.Rural Degree College (Id: C-24005)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 577,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "V.V. GIRI GOVT. KALASALA (Id: C-24336)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 578,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "V.V.S. Degree College, U.Kothapalli (Id: C-24366)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 579,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "Y.R.College of Arts & Science & Tech (Id: C-24281)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "East Godavari"
+  },
+  {
+    s_no: 580,
+    "university": "Adikavi Nannaya University, Rajahmundry, East Godawari (Id: U-0005)",
+    "college_name": "YSR & BS DEGREE COLLEGE (Id: C-23949)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district_name": "West Godavari"
+  },
+  {
+    s_no: 581,
+    "university": "Ahmedabad University (Id: U-0122)",
+    "college_name": "AES INSTITUTE OF COMPUTER STUDIES (Id: C-18)",
+    "college_type": "Constituent / University College",
+    "state_name": "Gujarat",
+    "district_name": "Ahmadabad"
+  },
+  {
+    s_no: 582,
+    "university": "Ahmedabad University (Id: U-0122)",
+    "college_name": "B.K. MAJUMDAR INSTITUTE OF BUSINESS ADMINISTRATION (Id: C-19)",
+    "college_type": "Constituent / University College",
+    "state_name": "Gujarat",
+    "district_name": "Ahmadabad"
+  },
+  {
+    s_no: 583,
+    "university": "Ahmedabad University (Id: U-0122)",
+    "college_name": "H. L. INSTITUTE OF COMMERCE (Id: C-17)",
+    "college_type": "Constituent / University College",
+    "state_name": "Gujarat",
+    "district_name": "Ahmadabad"
+  },
+  {
+    s_no: 584,
+    "university": "Ahmedabad University (Id: U-0122)",
+    "college_name": "H.L. INSTITUTE OF COMPUTER APPLICATIONS (Id: C-16)",
+    "college_type": "Constituent / University College",
+    "state_name": "Gujarat",
+    "district_name": "Ahmadabad"
+  },
+  {
+    s_no: 585,
+    "university": "Ahmedabad University (Id: U-0122)",
+    "college_name": "INSTITUTE OF INFORMATION AND COMMUNICATION TECHNOLOGY, AHMEDABAD (Id: C-47866)",
+    "college_type": "Constituent / University College",
+    "state_name": "Gujarat",
+    "district_name": "Ahmadabad"
+  },
+  {
+    s_no: 586,
+    "university": "Ahmedabad University (Id: U-0122)",
+    "college_name": "INSTITUTE OF LIFE SCIENCE, AHMEDABAD (Id: C-45931)",
+    "college_type": "Constituent / University College",
+    "state_name": "Gujarat",
+    "district_name": "Ahmadabad"
+  },
+  {
+    s_no: 587,
+    "university": "Ahmedabad University (Id: U-0122)",
+    "college_name": "POST GRADUATE INSTITUTE OF MANAGEMENT - AMRUT MODY SCHOOL OF MANAGEMENT (Id: C-15)",
+    "college_type": "Constituent / University College",
+    "state_name": "Gujarat",
+    "district_name": "Ahmadabad"
+  },
+  {
+    s_no: 588,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "Alagappa Government Arts College, Karaikudi (Id: C-28526)",
+    "college_type": "Affiliated College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Sivaganga"
+  },
+  {
+    s_no: 589,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "ALAGAPPA UNIVERSITY CONSTITUENT COLLEGE (Id: C-47507)",
+    "college_type": "Constituent / University College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Ramanathapuram"
+  },
+  {
+    s_no: 590,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "ALAGAPPA UNIVERSITY EVENING COLLEGE, PARAMAKKUDI (Id: C-47508)",
+    "college_type": "Affiliated College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Ramanathapuram"
+  },
+  {
+    s_no: 591,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "ALAGAPPA UNIVERSITY EVENING COLLEGE, RAMANATHAPURAM (Id: C-47509)",
+    "college_type": "Affiliated College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Ramanathapuram"
+  },
+  {
+    s_no: 592,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "ALAGAPPA UNIVERSITY EVENING COLLEGE, RAMESWARAM (Id: C-47510)",
+    "college_type": "Affiliated College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Ramanathapuram"
+  },
+  {
+    s_no: 593,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "ALAGAPPA UNIVERSITY EVENING COLLEGE, THIRUPPUVANAM (Id: C-47512)",
+    "college_type": "Affiliated College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Ramanathapuram"
+  },
+  {
+    s_no: 594,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "ALAGAPPA UNIVERSITY EVENING COLLEGE, THONDI (Id: C-47511)",
+    "college_type": "Affiliated College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Ramanathapuram"
+  },
+  {
+    s_no: 595,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "Ananda College, Devakottai (Id: C-28510)",
+    "college_type": "Affiliated College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Sivaganga"
+  },
+  {
+    s_no: 596,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "Arumugam Pillai Seethaiammal College, Tiruppathur (Id: C-28532)",
+    "college_type": "Affiliated College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Sivaganga"
+  },
+  {
+    s_no: 597,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "Caussanel College of Arts and Science, Muthuppettai (Id: C-28508)",
+    "college_type": "Affiliated College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Ramanathapuram"
+  },
+  {
+    s_no: 598,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "Dr. Umayal Ramanathan College for Women, Karaikudi (Id: C-28518)",
+    "college_type": "Affiliated College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Sivaganga"
+  },
+  {
+    s_no: 599,
+    "university": "Alagappa University, Alagappa Nagar, Karaikudi (Id: U-0435)",
+    "college_name": "Dr.Zakir Hussain College, Ilayangudi (Id: C-28533)",
+    "college_type": "Affiliated College",
+    "state_name": "Tamil Nadu",
+    "district_name": "Ramanathapuram"
+  },
+];
+    
+
+    const $ = id => document.getElementById(id);
+
+    const stateSelect = $("state"),
+      districtSelect = $("district"),
+      universitySelect = $("university"),
+      typeSelect = $("type"),
+      collegeSelect = $("college"),
+      messageDiv = $("message");
+
+  
+    new Set(collegedetails.map(c => c.state_name)).forEach(state => {
+      stateSelect.add(new Option(state, state));
+    });
+    stateSelect.onchange = () => {
+      districtSelect.length = universitySelect.length = typeSelect.length = collegeSelect.length = 1;
+      messageDiv.textContent = "";
+
+      const filteredDistricts = collegedetails
+        .filter(c => c.state_name === stateSelect.value)
+        .map(c => c.district_name);
+
+      new Set(filteredDistricts).forEach(d => districtSelect.add(new Option(d, d)));
+    };
+
+    
+    districtSelect.onchange = () => {
+      universitySelect.length = typeSelect.length = collegeSelect.length = 1;
+      messageDiv.textContent = "";
+
+      const filteredData = collegedetails.filter(c =>
+        c.state_name === stateSelect.value && c.district_name === districtSelect.value);
+
+     
+      new Set(filteredData.map(c => c.university)).forEach(u => {
+        universitySelect.add(new Option(u, u));
+      });
+    };
+
+    
+    universitySelect.onchange = () => {
+      typeSelect.length = collegeSelect.length = 1;
+      messageDiv.textContent = "";
+
+      const filteredData = collegedetails.filter(c =>
+        c.state_name === stateSelect.value &&
+        c.district_name === districtSelect.value &&
+        c.university === universitySelect.value);
+
+    
+      new Set(filteredData.map(c => c.college_type)).forEach(t => {
+        typeSelect.add(new Option(t, t));
+      });
+    };
+
+    
+    typeSelect.onchange = () => {
+      collegeSelect.length = 1;
+      messageDiv.textContent = "";
+
+      const filteredData = collegedetails.filter(c =>
+        c.state_name === stateSelect.value &&
+        c.district_name === districtSelect.value &&
+        c.university === universitySelect.value &&
+        c.college_type === typeSelect.value);
+
+      filteredData.forEach(c => {
+        collegeSelect.add(new Option(c.college_name, c.college_name));
+      });
+    };
+
+   function submitSelection() {
+  if (
+    stateSelect.value &&
+    districtSelect.value &&
+    universitySelect.value &&
+    typeSelect.value &&
+    collegeSelect.value
+  ) {
+    messageDiv.innerHTML = `
+      <div style="background-color: #d4edda; color: #155724; padding: 15px; border-radius: 10px; border: 1px solid #c3e6cb;">
+         <strong>Congratulations!</strong><br>
+        You have selected:<br><br>
+        <strong>College:</strong> ${collegeSelect.value}<br>
+        <strong>Type:</strong> ${typeSelect.value}<br>
+        <strong>University:</strong> ${universitySelect.value}<br>
+        <strong>District:</strong> ${districtSelect.value}<br>
+        <strong>State:</strong> ${stateSelect.value}
+      </div>
+    `;
+  } else {
+    messageDiv.innerHTML = `
+      <div style="background-color: #fff3cd; color: #856404; padding: 15px; border-radius: 10px; border: 1px solid #ffeeba;">
+         <strong>Please complete all selections before submitting.</strong>
+      </div>
+    `;
+  }
+}
+
+  </script>
+
+</body>
+
+</html>

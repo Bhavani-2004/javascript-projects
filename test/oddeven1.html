@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>odd and even numbers</title>
+</head>
+
+<body>
+    <!-- <h3>lets finding the odd and even numbers </h3> -->
+    <!-- <p id="even">"this is the even numbers"</p>
+    <p id="add">this is the add numbers</p> -->
+     <!-- <button onclick="result()"> result </button> -->
+     <!-- <script>
+        // function result(){
+        //     let even=document.getElementById("even").value
+        //     let add=document.getElementById("odd").value
+
+         let arr = [2, 3, 8, 12, 9, 6, 7, 5];
+        for (i = 0; i<arr.length; i++) {
+            let n = arr[i]
+            if (n % 2 == 0) {
+                even = n
+                 console.log(n, "this is the even numbers")
+            } else {
+                console.log(n, "this is the add numbers")
+
+            }
+        }
+        // }
+    </script> 
+       
+ -->
+
+    
+<!-- 
+   <script>
+  let b=[2,3,4,6,7,8,9,10]
+        for(i=0; i<b.length; i++){
+           let n=b[i]
+           if(n%2==0){
+            console.log(n,"this is the even number")
+           }
+           else{
+            console.log(n,"this is the odd numbers")
+           }
+        } -->
+   <!-- </script> -->/
+    <h3>Even and Odd Numbers:</h3>
+<div id="result"></div>
+
+<script>
+  let arr = [2, 3, 8, 12, 9, 6, 7, 5];
+  let output = "";
+
+  for (let i = 0; i < arr.length; i++) {
+    let n = arr[i];
+    if (n % 2 === 0) {
+      output += `${n} → This is an even number<br>`;
+    } else {
+      output += `${n} → This is an odd number<br>`;
+    }
+  }
+      
+      

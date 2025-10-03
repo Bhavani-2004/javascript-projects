@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Your College</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #444;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎓 Select Your College</h1>
+
+  <div class="form-group">
+    <label for="state">State</label>
+    <select id="state">
+      <option value="">...select your state...</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="district">District</label>
+    <select id="district">
+      <option value="">...select your district...</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="college">College</label>
+    <select id="college">
+      <option value="">...select your college...</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="type">Type</label>
+    <select id="type">
+      <option value="">...select your type...</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="university">University</label>
+    <select id="university">
+      <option value="">...select your university...</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <button id="submit">Submit</button>
+  </div>
+ <script>
+    let collegedetails=
+    [
+  {
+    "s.no": 1,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Aazad College of Education (Id: C-39230)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district-name": "Prakasam"
+  },
+  {
+    "s.no": 2,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Abhinav Institute of Management & Technology (Id: C-39450)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district-name": "Prakasam"
+  },
+  {
+    "s.no": 3,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "Abhyudaya Mahila Degree College (Id: C-32630)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district-name": "Guntur"
+  },
+  {
+    "s.no": 4,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.B.M. College (Id: C-32735)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district-name": "Prakasam"
+  },
+  {
+    "s.no": 5,
+    "university": "Acharya Nagarjuna University, Guntur (Id: U-0003)",
+    "college_name": "A.B.R College of Education (Id: C-39231)",
+    "college_type": "Affiliated College",
+    "state_name": "Andhra Pradesh",
+    "district-name": "Prakasam"
+  }]
+
+  
+
+ </script>
+</body>
+</html>

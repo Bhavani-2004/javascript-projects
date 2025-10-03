@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // simple array [] ;
+        let mixedTypeArray=[100,true,'Array',{}];
+         console.log(mixedTypeArray)
+        //destructive array method:
+         //pop() method;
+        let name=["bow","bow","cow"];
+        name.pop();
+        console.log(name);
+
+        //push() ;
+        let scores=[11,22,33,44,55,];
+        scores.push(66,77)
+        console.log(scores)
+
+        //shift();
+        let animalsNames=["buffalo","cow","bull"];
+        animalsNames.shift()
+        console.log( animalsNames)
+
+        //unshift();
+        let foodNames=["salad","breadtoast","sanwedge"];
+        foodNames.unshift("pizza","pasta","magiee")
+        console.log(foodNames)
+
+        //splice () methods;
+        let fruits = ["Mango", "Strawberries", "Lime", "Oranges", "Pomegranate"];
+        fruits.splice(0,1,"kiwi","sagoo")
+        console.log(fruits)
+
+        let fruitsName=["lime","orange","mangoes"];
+        fruitsName.splice(1,2,"grapes","kiwi")
+        console.log(fruitsName)
+
+        //Non Destructive methods:
+        //Suppose you have two arrays of European and African country names:
+
+        let EuroCountries=["Germany","poland","sewdon"];
+        let AfricanCountries=["ghana","Nigeria"]
+
+        let country =EuroCountries.concat(AfricanCountries);
+        console.log(country)
+
+        country =EuroCountries.concat("togo","rwanda");
+        console.log(EuroCountries)
+         country= EuroCountries.concat(AfricanCountries,"South Africa");
+        console.log( country);
+
+        
+
+    </script>
+</body>
+</html>
